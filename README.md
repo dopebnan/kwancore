@@ -11,7 +11,7 @@ If you're here, you probably know how to host a discord bot already :)
 
 This template has been made for RaspberryPis, and has the highest possibility of NOT breaking on Raspbian. It will probably run fine on any Debian-based distro too, but I wouldn't recommend running this on Windows, since some commands do require a bash terminal.
 
-The whole entirety of this project is under [GNU General Public License v3](LICENSE), except any libraries/modules that state otherwise (like the [shortcuts](bot/shortcuts) module, as it is under the [MIT License](bot/shortcuts).
+The whole entirety of this project is under [GNU General Public License v3](LICENSE), except any libraries/modules that state otherwise (like the [shortcuts](bot/shortcuts) module, as it is under the [MIT License](bot/shortcuts/LICENSE)).
 
 ## Legal Notices
 
