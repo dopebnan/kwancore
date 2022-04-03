@@ -5,7 +5,7 @@ The kwancore project is an extensive template for discord.py bots.
 ## Prerequisites
 * [discord.py](https://github.com/Rapptz/discord.py)
 
-## Selfhosting
+## Self-hosting
 If you're here, you probably know how to host a discord bot already :)
 
 ## Notices

@@ -34,21 +34,26 @@ if not os.path.isdir("logs"):
 
 logger = easylogger.Logger("logs/log.txt", "$time $cwfile: [$level] $arg: $message", cwf=__file__)
 
-with open("assets/config.yml") as file:
-    config = yaml.safe_load(file)
-    logger.log("info", message="loaded config.yml")
+try:
+    with open("assets/config.yaml") as file:
+        config = yaml.safe_load(file)
+        logger.log("info", "initialization", f"loaded {file.name}")
+except FileNotFoundError:
+    logger.log("error", "initialization", "config files not found, stopping..")
+    raise FileNotFoundError("Config files not found.")
 
 status_msg = ["KWANCORE!!!", "kc!"]
 
 bot = Bot(command_prefix="kc!")
 
+bot.module_el = easylogger
 bot.temp_warning = 0
 
 
 @bot.event
 async def on_ready():
     logger.log()
-    logger.log(message="kwancore!".center(79))
+    logger.log(message="kwancore".center(79))
     logger.log(message=f"discord.py version: {discord.__version__}".center(79))
     logger.log(message=f"bot: {bot.user.name}".center(79))
     logger.log()
@@ -104,6 +109,7 @@ async def temp_task():
         logger.log("info", "temp_task", "reloading..")
         await reload()
 
+bot.remove_command("help")
 if __name__ == "__main__":
     pass
 
@@ -114,7 +120,7 @@ for cog in os.listdir("cogs"):
 
 
 async def reload():
-    await asyncio.sleep(5)  # this is needed incase of an update or lag
+    await asyncio.sleep(5)  # this is needed in case of an update or lag
     for cogs in os.listdir("cogs"):
         if cogs.endswith(".py"):
             bot.reload_extension(f"cogs.{cogs.split('.', 1)[0]}")
@@ -123,7 +129,8 @@ async def reload():
 
 @bot.event
 async def on_command_completion(ctx):
-    logger.log("info", f"<{ctx.message.author}, {ctx.message.author.id}>", ctx.command.qualified_name)
+    logger.log("info", f"<{ctx.message.author}, {ctx.message.author.id}>",
+               ctx.command.qualified_name, ctx.cog.qualified_name or None)
 
 
 @bot.event

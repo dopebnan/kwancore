@@ -3,6 +3,8 @@ Copyright (c) 2022 dopebnan
 """
 
 import time
+import os.path
+
 
 class Logger:
     def __init__(self, file, format, cwf):
@@ -10,8 +12,9 @@ class Logger:
         self.format = format
         self.cwf = cwf.split('/')[-1]
 
-    def log(self, level='', arg='', message=''):
+    def log(self, level='', arg='', message='', cwfile=''):
         """logs the message"""
+        cwfile = cwfile or self.cwf
 
         result = self.format
         if "$level" in result:
@@ -22,7 +25,7 @@ class Logger:
             t = time.strftime("%b %d %H:%M:%S", time.localtime())
             result = result.replace("$time", t)
         if "$cwfile" in result:
-            result = result.replace("$cwfile", self.cwf)
+            result = result.replace("$cwfile", cwfile)
         if "$arg" in result:
             result = result.replace("$arg", arg)
 
