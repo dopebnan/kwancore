@@ -17,3 +17,5 @@ The whole entirety of this project is under [GNU General Public License v3](LICE
 ## Legal Notices
 
 This project uses [discord.py](https://github.com/Rapptz/discord.py) made by Rapptz, which is licensed under the MIT License. A copy of this can be found in [discord-py_license](licenses/discord-py_license).
+
+Also note that this project, despite using multiple libraries and/or modules, doesn't ship any of them with it. Any modules that this project uses belong to their respective owners, with their respective licenses. All of them, though, are GNU GPL compatible.
