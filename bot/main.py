@@ -21,6 +21,7 @@ import os
 import random
 import unicodedata
 import yaml
+import json
 
 from shortcuts import easylogger, misc
 import embeds
@@ -32,21 +33,47 @@ from discord.ext.commands import Bot
 if not os.path.isdir("logs"):
     os.mkdir("logs/")
 
-logger = easylogger.Logger("logs/log.txt", "$time $cwfile: [$level] $arg: $message", cwf=__file__)
+easylogger.add_level("command", 21)
+logger = easylogger.Logger("logs/log.txt", "$time $cwfile: [$level] $arg: $message")
+
+
+def default_settings():
+    with open("assets/settings.json", 'w') as f:
+        json.dump(config["default_settings"], f)
+    with open("assets/settings.json") as f:
+        sttngs = json.load(f)
+    logger.log("info", "initialization/default_settings", "Created a default config.json")
+    return sttngs
+
 
 try:
     with open("assets/config.yaml") as file:
         config = yaml.safe_load(file)
         logger.log("info", "initialization", f"loaded {file.name}")
 except FileNotFoundError:
-    logger.log("error", "initialization", "config files not found, stopping..")
-    raise FileNotFoundError("Config files not found.")
+    logger.log("critical", "initialization", "config file not found, stopping..")
+    raise FileNotFoundError("Config file not found.")
+
+try:
+    with open("assets/settings.json") as file:
+        settings = json.load(file)
+        logger.log("info", "initialization", f"loaded {file.name}")
+except FileNotFoundError:
+    logger.log("warn", "initialization", "Couldn't find settings file, creating a default one..")
+    settings = default_settings()
+except json.decoder.JSONDecodeError:
+    logger.log("warn", "initialization", "Couldn't decode the file, are you sure it's not empty? Defaulting..")
+    settings = default_settings()
+if len(settings) != len(config["default_settings"]):
+    logger.log("error", "initialization", f"Bad settings file, defaulting..")
+    settings = default_settings()
 
 status_msg = ["KWANCORE!!!", "kc!"]
 
+
 bot = Bot(command_prefix="kc!")
 
-bot.module_el = easylogger
+bot.logger = logger
 bot.temp_warning = 0
 
 
@@ -85,7 +112,7 @@ async def temp_task():
     elif temp > 80:
         logger.log("critical", "temp_task", f"the cpu reached {temp}'C")
         logger.log("info", "temp_task", "reloading..")
-        await reload()
+        reload()
 
     if 0 < bot.temp_warning < 5:
         embed = discord.Embed(title="WARNING", description=f"the pi's temp is `{temp}'C`", color=0xffc300)
@@ -107,7 +134,7 @@ async def temp_task():
         logger.log("info", "temp_task", "sent error embed")
 
         logger.log("info", "temp_task", "reloading..")
-        await reload()
+        reload()
 
 bot.remove_command("help")
 if __name__ == "__main__":
@@ -119,8 +146,7 @@ for cog in os.listdir("cogs"):
         logger.log("INFO", "cog loader", f"loaded '{cog}'")
 
 
-async def reload():
-    await asyncio.sleep(5)  # this is needed in case of an update or lag
+def reload():
     for cogs in os.listdir("cogs"):
         if cogs.endswith(".py"):
             bot.reload_extension(f"cogs.{cogs.split('.', 1)[0]}")
@@ -129,8 +155,10 @@ async def reload():
 
 @bot.event
 async def on_command_completion(ctx):
-    logger.log("info", f"<{ctx.message.author}, {ctx.message.author.id}>",
-               ctx.command.qualified_name, ctx.cog.qualified_name or None)
+    logger.log("command", f"#{ctx.channel.name}",
+               ctx.message.content, f"<{ctx.message.author}, {ctx.message.author.id}>")
+    if ctx.command.qualified_name == "settings":
+        reload()
 
 
 @bot.event
@@ -163,7 +191,8 @@ async def on_command_error(ctx, error):
         error_embed_parts = error_message.split(':', 1)
         embed = discord.Embed(title=error_embed_parts[0], description=error_embed_parts[1], color=0xE3170A)
     await ctx.send(embed=embed)
-    logger.log("error", f"<{ctx.message.author}, {ctx.message.author.id}>", f"{error_message} ({ctx.message.content})")
+    logger.log("error", ctx.message.content, error_message,
+               f"<{ctx.message.author}, {ctx.message.author.id}>")
 
     # raise error
 

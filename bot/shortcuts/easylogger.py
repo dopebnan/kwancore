@@ -3,18 +3,28 @@ Copyright (c) 2022 dopebnan
 """
 
 import time
-import os.path
+import inspect
+
+levels = {"": 0, "info": 10, "warn": 20, "error": 30, "critical": 40}
+
+
+def add_level(level_name, level: int):
+    """To add another level to the logger"""
+    levels[level_name.lower()] = level
+    return levels
 
 
 class Logger:
-    def __init__(self, file, format, cwf):
+    def __init__(self, file, format, level=""):
+        """The main class you need to set up before logging anything"""
+        self.levels = levels
+        self.level = level.lower()
         self.file = file
         self.format = format
-        self.cwf = cwf.split('/')[-1]
 
     def log(self, level='', arg='', message='', cwfile=''):
         """logs the message"""
-        cwfile = cwfile or self.cwf
+        cwfile = cwfile or inspect.stack()[1].filename.split('/')[-1]
 
         result = self.format
         if "$level" in result:
@@ -29,6 +39,7 @@ class Logger:
         if "$arg" in result:
             result = result.replace("$arg", arg)
 
-        print(result)
-        with open(self.file, 'a') as f:
-            f.write(result + '\n')
+        if self.levels[level.lower()] >= self.levels[self.level.lower()]:
+            print(result)
+            with open(self.file, 'a') as f:
+                f.write(result + '\n')
