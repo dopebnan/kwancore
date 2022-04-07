@@ -1,6 +1,6 @@
 # KWANCORE
 
-The kwancore project is an extensive template for discord.py bots. 
+The kwancore project is an extensive "template" for discord.py bots. 
 
 ## Prerequisites
 * [discord.py](https://github.com/Rapptz/discord.py)

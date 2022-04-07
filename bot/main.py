@@ -16,12 +16,13 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-import asyncio
 import os
 import random
+import time
 import unicodedata
 import yaml
 import json
+import traceback
 
 from shortcuts import easylogger, misc
 import embeds
@@ -32,6 +33,8 @@ from discord.ext.commands import Bot
 
 if not os.path.isdir("logs"):
     os.mkdir("logs/")
+if not os.path.isdir("traceback"):
+    os.mkdir("traceback/")
 
 easylogger.add_level("command", 21)
 logger = easylogger.Logger("logs/log.txt", "$time $cwfile: [$level] $arg: $message")
@@ -69,7 +72,6 @@ if len(settings) != len(config["default_settings"]):
     settings = default_settings()
 
 status_msg = ["KWANCORE!!!", "kc!"]
-
 
 bot = Bot(command_prefix="kc!")
 
@@ -155,7 +157,7 @@ def reload():
 
 @bot.event
 async def on_command_completion(ctx):
-    logger.log("command", f"#{ctx.channel.name}",
+    logger.log("command", f"{ctx.guild + '/#' + ctx.channel.name}",
                ctx.message.content, f"<{ctx.message.author}, {ctx.message.author.id}>")
     if ctx.command.qualified_name == "settings":
         reload()
@@ -188,8 +190,11 @@ async def on_command_error(ctx, error):
         embed = embeds.command_not_found()
 
     else:
+        err_id = misc.save_traceback(error)
         error_embed_parts = error_message.split(':', 1)
         embed = discord.Embed(title=error_embed_parts[0], description=error_embed_parts[1], color=0xE3170A)
+        embed.set_footer(text=f"Error ID: {err_id}")
+
     await ctx.send(embed=embed)
     logger.log("error", ctx.message.content, error_message,
                f"<{ctx.message.author}, {ctx.message.author.id}>")
