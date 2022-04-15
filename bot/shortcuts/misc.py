@@ -1,15 +1,20 @@
 """
 Copyright (c) 2022 dopebnan
 """
-
+import os
 import subprocess
 import traceback
+import tempfile
 import time
 
 
 def terminal(cmd):
-    arg = cmd.split(' ')
-    return subprocess.run(arg, stdout=subprocess.PIPE).stdout.decode('utf-8')
+    with tempfile.TemporaryFile() as f:
+        process = subprocess.Popen(cmd, stdout=f, shell=True)
+        process.wait()
+        f.seek(0)
+        result = f.read()
+    return result
 
 
 def save_traceback(error):
@@ -26,6 +31,7 @@ def save_traceback(error):
 
     return err_id
 
+
 def queue_format(queue, index):
     result = f"```fsharp\n"
     for i in range(0, len(queue)):
@@ -36,8 +42,8 @@ def queue_format(queue, index):
             duration = '0' + duration
         length = str(length // 60) + ':' + duration
 
-        if len(song) > 36:
-            song = song[0:36]
+        if len(song) > 32:
+            song = song[0:32]
             song += "…"
         else:
             song = song + ' ' * (37 - len(song))
@@ -45,7 +51,7 @@ def queue_format(queue, index):
             result += f"        You're here ↴\n"
         result += f" {i + 1}) {song} {length}      \n"
 
-    result += "\n    You've hit the end of the queue\n```"
+    result += "\n" + "You've hit the end of the queue!".center(42) + "\n```"
     return result
 
 
