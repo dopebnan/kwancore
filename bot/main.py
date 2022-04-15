@@ -25,7 +25,7 @@ import json
 import traceback
 
 from shortcuts import easylogger, misc
-import embeds
+import embeds, errors
 
 import discord
 from discord.ext import commands, tasks
@@ -76,6 +76,7 @@ status_msg = ["KWANCORE!!!", "kc!"]
 bot = Bot(command_prefix="kc!")
 
 bot.logger = logger
+bot.errors = errors
 bot.temp_warning = 0
 
 
@@ -157,7 +158,7 @@ def reload():
 
 @bot.event
 async def on_command_completion(ctx):
-    logger.log("command", f"{ctx.guild + '/#' + ctx.channel.name}",
+    logger.log("command", f"{str(ctx.guild) + '/#' + ctx.channel.name}",
                ctx.message.content, f"<{ctx.message.author}, {ctx.message.author.id}>")
     if ctx.command.qualified_name == "settings":
         reload()

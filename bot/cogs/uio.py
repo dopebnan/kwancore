@@ -11,6 +11,12 @@ from discord.ext.commands import BucketType
 with open("assets/settings.json") as file:
     settings = json.load(file)
 
+descriptions = {
+    "settings": ("`kc!settings key value`\n"
+                 "\n`key` is the setting you want to change"
+                 "\n`value` is what you will change it to\n"
+                 "\neg. `kc!settings pic_cooldown 10`")
+}
 
 def is_bool(arg):
     if arg.lower() in ("yes", "y", "true", "1", "enable", "on"):
@@ -42,7 +48,7 @@ class UIO(commands.Cog, name="UserInput/Output", description="General I/O comman
     async def echo(self, ctx, msg):
         await ctx.send(msg)
 
-    @commands.command(name="settings", brief="Change the settings")
+    @commands.command(name="settings", brief="Change the settings", description=descriptions["settings"])
     async def settings(self, ctx, *args: str):
         if args:
             if len(args) < 2:
@@ -69,6 +75,7 @@ class UIO(commands.Cog, name="UserInput/Output", description="General I/O comman
 
         await ctx.send(embed=embed)
         self.logger.log("info", "settings", "Sent settings embed")
+
 
 def setup(bot):
     bot.add_cog(UIO(bot))
