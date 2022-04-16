@@ -46,12 +46,19 @@ def queue_format(queue, index):
             song = song[0:32]
             song += "…"
         else:
-            song = song + ' ' * (37 - len(song))
+            song = song + ' ' * (32 - len(song))
         if index == i + 1:
             result += f"        You're here ↴\n"
         result += f" {i + 1}) {song} {length}      \n"
 
     result += "\n" + "You've hit the end of the queue!".center(42) + "\n```"
+
+    if len(result) > 2000:
+        num = (len(result) - 2000) + 1
+        result = result[:-num] + "…"  # remove excess characters
+        result = result[:-47]  # remove end queue line
+        result += "\n" + "You've hit the end of the queue!".center(42) + "\n```"  # add back end queue line
+
     return result
 
 

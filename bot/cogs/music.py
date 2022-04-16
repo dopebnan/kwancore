@@ -11,7 +11,7 @@ from discord.ext import commands, tasks
 from yt_dlp import YoutubeDL as yt_dlp
 from shortcuts import misc
 
-ytdl_opts = {'format': 'bestaudio/audio', "quiet": True}
+ytdl_opts = {'format': 'bestaudio/audio', "quiet": True, "ignoreerrors": True}
 ffmpeg_opts = {"bopts": "-reconnect 1", "opts": "-vn"}
 
 descriptions = {
@@ -34,15 +34,16 @@ class Music(commands.Cog, name="Music", description="Music commands"):
     def search_yt(self, video):
         self.logger.log("info", "search_yt", f"Searching for '{video}'..")
         with yt_dlp(ytdl_opts) as yt_l:
-            info = yt_l.extract_info(f"ytsearch:{video}", download=False)["entries"][0]
-        self.logger.log("info", "search_yt", f"Found '{info['title']}' ({info['display_id']})")
-        result = {
-            "hls": info["url"],
-            "url": info["original_url"],
-            "title": info["title"],
-            "artist": info["uploader"],
-            "length": info["duration"]
-        }
+            if video.startswith("https://"):
+                 info = yt_l.extract_info(video, download=False)
+                 self.logger.log("info", "search_yt", f"YTPlayList ({info['webpage_url']})")
+            else:
+                # info = yt_l.extract_info(f"ytsearch:{video}", download=False)["entries"][0]
+                info = yt_l.extract_info(f"ytsearch:{video}", download=False)
+                self.logger.log("info", "search_yt", f"Found '{info['title']}' ({info['display_id']})")
+        result = info
+        if len(result["entries"]) > 50:
+            raise ValueError("You shouldn't queue more than 50 videos at the same time.")
         return result
 
     def attachment_url(self, file):
@@ -126,10 +127,21 @@ class Music(commands.Cog, name="Music", description="Music commands"):
             raise self.bot.errors.NoVoiceClient()
         else:
             async with ctx.typing():
-                song = self.search_yt(args)
-                self.music_queue.append([song, voice_client, ctx.author])
-            self.logger.log("info", "play", f"Added {song['title']} to the queue")
-            await ctx.send(f"Added `{song['title']}` to the queue!")
+                songs = self.search_yt(args)
+                for song in songs["entries"]:
+                    if song is None:
+                        pass
+                    else:
+                        info = {
+                            "hls": song["url"],
+                            "url": song["original_url"],
+                            "title": song["title"],
+                            "artist": song["uploader"],
+                            "length": song["duration"]
+                        }
+                        self.music_queue.append([info, voice_client, ctx.author])
+                        self.logger.log("info", "play", f"Added {info['title']} to the queue")
+            await ctx.send(f"Added `{songs['title']}` to the queue!")
 
             if not voice_client.is_playing():
                 await self.play_music()
