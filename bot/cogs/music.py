@@ -15,7 +15,10 @@ ytdl_opts = {'format': 'bestaudio/audio', "quiet": True, "ignoreerrors": True}
 ffmpeg_opts = {"bopts": "-reconnect 1", "opts": "-vn"}
 
 descriptions = {
-    "play": "`kc!play *song`\n\nThe bot will search YouTube for your requested song and play the best result",
+    "play": "`kc!play flag *song`\n\nThe bot will search for your requested song and play the best result\n"
+            "\nSearch flags:"
+            f"\n` -yt, --youtube{' ' * 14}search on youtube`"
+            f"\n` -sc, --soundcloud{' ' * 11}search on soundcloud`",
     "playfile": "`kc!playfile`\n\nThe bot will play the file attached to your message",
     "remove": "`kc!remove index`\n\nRemoves the `index`th item from the queue"
 }
@@ -31,19 +34,57 @@ class Music(commands.Cog, name="Music", description="Music commands"):
         self.queue_index = 0
         self.ctx = ""
 
-    def search_yt(self, video):
-        self.logger.log("info", "search_yt", f"Searching for '{video}'..")
+    def add_to_queue(self, songs, ctx):
+        """
+        Adds the song(s) to the queue.
+
+        :param songs: dict, the songs
+        :param ctx: class, the context
+
+        :return: dict, the last song added to the queue
+        """
+        for song in songs["entries"]:
+            if song is None:
+                pass
+            else:
+                info = {
+                    "hls": song["url"],
+                    "url": song["original_url"],
+                    "title": song["title"],
+                    "artist": song["uploader"],
+                    "length": int(song["duration"])
+                }
+            self.music_queue.append([info, ctx.guild.voice_client, ctx.author])
+            self.logger.log("info", "play", f"Added {info['title']} to the queue")
+
+        return song
+
+    def search(self, video, arg):
+        """
+        Search and find a video based on keywords or url.
+
+        :param video: str, keyword/url that it searches for
+        :param arg: str, platform to search
+
+        :return: dict, dictionary with results
+        """
+        self.logger.log("info", "search", f"Searching for '{video}' with '{arg}'..")
         with yt_dlp(ytdl_opts) as yt_l:
             if video.startswith("https://"):
-                 info = yt_l.extract_info(video, download=False)
-                 self.logger.log("info", "search_yt", f"YTPlayList ({info['webpage_url']})")
+                info = yt_l.extract_info(video, download=False)
+                if len(info["entries"]) < 1:
+                    raise ValueError("Search result returned nothing")
+                self.logger.log("info", "search", f"Playlist ({info['webpage_url']})")
             else:
                 # info = yt_l.extract_info(f"ytsearch:{video}", download=False)["entries"][0]
-                info = yt_l.extract_info(f"ytsearch:{video}", download=False)
-                self.logger.log("info", "search_yt", f"Found '{info['title']}' ({info['display_id']})")
+                info = yt_l.extract_info(f"{arg}{video}", download=False)
+                if len(info["entries"]) < 1:
+                    raise ValueError("Search result returned nothing")
+                self.logger.log("info", "search", f"Found '{info['title']}' ({info['entries'][0]['display_id']})")
         result = info
         if len(result["entries"]) > 50:
             raise ValueError("You shouldn't queue more than 50 videos at the same time.")
+
         return result
 
     def attachment_url(self, file):
@@ -59,7 +100,6 @@ class Music(commands.Cog, name="Music", description="Music commands"):
         }
         return result
 
-    # {[{"hls": url}, <vc>, <auth>]}
     async def play_music(self):
         if len(self.music_queue) > self.queue_index:
             song = self.music_queue[self.queue_index][0]
@@ -117,6 +157,18 @@ class Music(commands.Cog, name="Music", description="Music commands"):
 
     @commands.command(name="play", brief="Bot plays your requested song", description=descriptions["play"])
     async def play(self, ctx, *args):
+        if args[0].startswith("-"):
+            flag = list(args).pop(0)
+        else:
+            flag = "--youtube"
+        if flag == "-yt" or flag == "--youtube":
+            search_type = "ytsearch:"
+        elif flag == "-sc" or flag == "--soundcloud":
+            search_type = "scsearch:"
+        else:
+            raise self.bot.errors.BadArgument("That flag doesn't exist", flag)
+        self.logger.log("info", "play", flag)
+
         args = " ".join(args)
         voice_client = ctx.guild.voice_client
         vc = ctx.author.voice
@@ -125,26 +177,17 @@ class Music(commands.Cog, name="Music", description="Music commands"):
             raise self.bot.errors.AuthorNotInVoice()
         elif not voice_client:
             raise self.bot.errors.NoVoiceClient()
-        else:
-            async with ctx.typing():
-                songs = self.search_yt(args)
-                for song in songs["entries"]:
-                    if song is None:
-                        pass
-                    else:
-                        info = {
-                            "hls": song["url"],
-                            "url": song["original_url"],
-                            "title": song["title"],
-                            "artist": song["uploader"],
-                            "length": song["duration"]
-                        }
-                        self.music_queue.append([info, voice_client, ctx.author])
-                        self.logger.log("info", "play", f"Added {info['title']} to the queue")
-            await ctx.send(f"Added `{songs['title']}` to the queue!")
 
-            if not voice_client.is_playing():
-                await self.play_music()
+        async with ctx.typing():
+            songs = self.search(args, search_type)
+            song = self.add_to_queue(songs, ctx)
+            if not args.startswith("https://"):
+                await ctx.send(f"Added `{song['title']} to the queue!`")
+            else:
+                await ctx.send(f"Added `{songs['title']}` to the queue!")
+
+        if not voice_client.is_playing():
+            await self.play_music()
 
     @commands.command(name="queue", brief="shows the queue")
     async def queue(self, ctx):
@@ -239,6 +282,7 @@ class Music(commands.Cog, name="Music", description="Music commands"):
         voice_client.stop()
         voice_client.cleanup()
         await voice_client.disconnect()
+        self.inactivity.cancel()
         await ctx.send("Left voice channel")
 
     @commands.command(name="remove", brief="Removes an item from the queue", description=descriptions["remove"])
