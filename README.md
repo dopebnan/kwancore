@@ -7,6 +7,7 @@ You should modify it according to your desired results.
 * [discord.py](https://github.com/Rapptz/discord.py)
 * [yt-dlp](https://github.com/yt-dlp/yt-dlp)
 * [FFmpeg/FFprobe](https://git.ffmpeg.org/ffmpeg.git) 
+* [AGenius.py](https://github.com/dopebnan/AGenius.py)
 
 ## Self-hosting
 If you're here, you probably know how to host a discord bot already :)
@@ -25,11 +26,9 @@ as it is under the [MIT License](bot/shortcuts/LICENSE)).
 
 This project uses [discord.py](https://github.com/Rapptz/discord.py) by Rapptz as a Discord API wrapper, 
 [yt-dlp](https://github.com/yt-dlp/yt-dlp) by yt-dlp as a way to get music from streaming services,
-[FFmpeg/FFprobe](https://git.ffmpeg.org/ffmpeg.git) by the FFmpeg team to stream the media through the bot.
-Their licenses, in order, are the [MIT License](licenses/discord-py_license), 
-[The Unlicense License](https://unlicense.org/),
-and the [GNU Lesser General Public License v2.1](licenses/ffmpeg_license).
+[FFmpeg/FFprobe](https://git.ffmpeg.org/ffmpeg.git) by the FFmpeg team to stream the media through the bot,
+[AGenius.py](https://github.com/dopebnan/AGenius.py) by dopebnan, to load the lyrics of songs.
 
 Also note that this project, despite using multiple libraries and/or modules, doesn't ship any of them with it. 
-Any modules that this project uses belong to their respective owners, with their respective licenses. 
-All of them, though, are GNU GPL compatible.
+Any modules that this project uses belong to their respective owners, with their respective licenses.
+If you wish to use this code, you must agree to those libraries'/modules' licenses.
