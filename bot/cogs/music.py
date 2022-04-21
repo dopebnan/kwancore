@@ -4,6 +4,7 @@ Copyright (C) 2022  dopebnan
 """
 
 import asyncio
+import agenius
 
 import discord
 from discord.ext import commands, tasks
@@ -29,10 +30,12 @@ class Music(commands.Cog, name="Music", description="Music commands"):
         Music.color = discord.Color.random()
         self.logger = bot.logger
         self.bot = bot
+        self.checks = 0
+        self.genius = agenius.Genius(self.bot.config["genius_token"])
 
         self.music_queue = []
         self.queue_index = 0
-        self.ctx = ""
+        self.ctx = {}
 
     def add_to_queue(self, songs, ctx):
         """
@@ -111,7 +114,7 @@ class Music(commands.Cog, name="Music", description="Music commands"):
                 description=f"{song['artist']} - {song['title']} [{author.mention}]",
                 color=discord.Color.random()
             )
-            await self.ctx.send(embed=embed)
+            await self.ctx[vc.guild.id].send(embed=embed)
             self.logger.log('info', "play_music", f"Sent '{embed.title}' embed")
 
             self.queue_index += 1
@@ -121,18 +124,24 @@ class Music(commands.Cog, name="Music", description="Music commands"):
                                            before_options=ffmpeg_opts["bopts"], options=ffmpeg_opts["opts"]),
                     after=lambda play: asyncio.run_coroutine_threadsafe(self.play_music(), self.bot.loop))
 
-    @tasks.loop(minutes=10)
+    @tasks.loop(minutes=5)
     async def inactivity(self, ctx):
-        if not ctx.guild.voice_client.is_playing() or len(ctx.guild.voice_client.channel.members) > 0:
+        if not ctx.guild.voice_client.is_playing() or len(ctx.guild.voice_client.channel.members) < 2:
+            self.checks += 1
+            self.logger.log("warn", "inactivity", f"Inactivity check #{self.checks} returned true")
+        else:
+            self.logger.log("warn", "inactivity", f"Inactivity check #{self.checks} returned false")
+            self.checks = 0
+
+        if self.checks > 2:
             self.music_queue.clear()
             self.queue_index = 0
-            await ctx.guild.voice_client.stop()
-            ctx.guild.voice_client.cleanup()
-            await ctx.guild.voice_client.disconnect()
+            await ctx.voice_client.disconnect()
             embed = discord.Embed(title="Inactivity", description="Bot has been inactive for too long, leaving vc",
                                   color=discord.Color.red())
             await ctx.send(embed=embed)
             self.logger.log("warn", "inactivity", "Too much inactivity, left vc")
+            self.checks = 0
             self.inactivity.cancel()
 
     @commands.command(name="join", brief="Bot joins the voice channel")
@@ -146,19 +155,21 @@ class Music(commands.Cog, name="Music", description="Music commands"):
         vc = author_voice.channel
         if not voice_client:
             await vc.connect()
-            self.ctx = ctx
+            self.ctx = {ctx.guild.id: ctx}
+            self.logger.log("info", "join", f"Joined {str(ctx.guild) + '/' + str(vc)}")
+            await ctx.send(f"Joined `{vc}`!")
+            await asyncio.sleep(300)
+            self.inactivity.start(ctx)
         else:
             await voice_client.move_to(vc)
-        self.logger.log("info", "join", f"Joined {str(ctx.guild) + '/' + str(vc)}")
-        await ctx.send(f"Joined `{vc}`!")
-
-        await asyncio.sleep(300)
-        self.inactivity.start(ctx)
+            self.logger.log("info", "join", f"Joined {str(ctx.guild) + '/' + str(vc)}")
+            await ctx.send(f"Joined `{vc}`!")
 
     @commands.command(name="play", brief="Bot plays your requested song", description=descriptions["play"])
     async def play(self, ctx, *args):
+        args = list(args)
         if args[0].startswith("-"):
-            flag = list(args).pop(0)
+            flag = args.pop(0)
         else:
             flag = "--youtube"
         if flag == "-yt" or flag == "--youtube":
@@ -181,6 +192,7 @@ class Music(commands.Cog, name="Music", description="Music commands"):
         async with ctx.typing():
             songs = self.search(args, search_type)
             song = self.add_to_queue(songs, ctx)
+            self.music_queue[-1][0]["keywords"] = args
             if not args.startswith("https://"):
                 await ctx.send(f"Added `{song['title']} to the queue!`")
             else:
@@ -279,8 +291,6 @@ class Music(commands.Cog, name="Music", description="Music commands"):
 
         self.music_queue.clear()
         self.queue_index = 0
-        voice_client.stop()
-        voice_client.cleanup()
         await voice_client.disconnect()
         self.inactivity.cancel()
         await ctx.send("Left voice channel")
@@ -291,6 +301,31 @@ class Music(commands.Cog, name="Music", description="Music commands"):
             raise IndexError("Index out of range")
 
         await ctx.send(f"Removed `{self.music_queue.pop(index - 1)[0]['title']}` from the queue")
+
+    @commands.command(name="lyrics", brief="Searched for the song's lyrics")
+    async def lyrics(self, ctx):
+        if not ctx.guild.voice_client.is_playing:
+            raise self.bot.errors.VoiceClientError("voice_client isn't playing anything")
+
+        song = self.music_queue[self.queue_index - 1][0]
+        info = await self.genius.search_song(song["keywords"])
+
+        embed = discord.Embed(
+            title=self.music_queue[self.queue_index - 1][0]["title"],
+            description=info.lyrics[:2000].split("Lyrics")[1],
+            color=discord.Color.random()
+        )
+        embed.add_field(
+            name=u"\u200b",
+            value=info.lyrics[2000:3000].replace("Embed", '') + '…'
+        )
+        if len(info.lyrics) > 3000:
+            embed.add_field(
+                name="Character limit hit",
+                value=f"Go to {info.url} for the rest"
+            )
+        embed.set_footer(text="Powered by Genius.com and AGenius.py")
+        await ctx.send(embed=embed)
 
 
 def setup(bot):
