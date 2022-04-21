@@ -75,6 +75,7 @@ status_msg = ["KWANCORE!!!", "kc!"]
 
 bot = Bot(command_prefix="kc!")
 
+bot.config = config
 bot.logger = logger
 bot.errors = errors
 bot.temp_warning = 0

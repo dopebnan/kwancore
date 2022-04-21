@@ -39,7 +39,7 @@ class UIO(commands.Cog, name="UserInput/Output", description="General I/O comman
         img = "assets/images/kwancore.png"
         await ctx.send(file=discord.File(img))
 
-        if settings["pic_cooldown_message"]:
+        if settings["pic_cooldown_bool"]:
             await ctx.send(f"*Cooldown has been set to **{settings['pic_cooldown']}s***")
         self.logger.log("info", "pic", f"Sent {img} to {ctx.channel}")
 
