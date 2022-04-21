@@ -185,7 +185,7 @@ class Music(commands.Cog, name="Music", description="Music commands"):
             song = self.add_to_queue(songs, ctx)
             self.music_queue[-1][0]["keywords"] = args
             if not args.startswith("https://"):
-                await ctx.send(f"Added `{song['title']} to the queue!`")
+                await ctx.send(f"Added `{song['title']}` to the queue!")
             else:
                 await ctx.send(f"Added `{songs['title']}` to the queue!")
 
@@ -299,7 +299,8 @@ class Music(commands.Cog, name="Music", description="Music commands"):
             raise self.bot.errors.VoiceClientError("voice_client isn't playing anything")
 
         song = self.music_queue[self.queue_index - 1][0]
-        info = await self.genius.search_song(song["keywords"])
+        async with ctx.typing():
+            info = await self.genius.search_song(song["keywords"])
 
         embed = discord.Embed(
             title=self.music_queue[self.queue_index - 1][0]["title"],
