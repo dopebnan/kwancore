@@ -15,15 +15,6 @@ from shortcuts import misc
 ytdl_opts = {'format': 'bestaudio/audio', "quiet": True, "ignoreerrors": True}
 ffmpeg_opts = {"bopts": "-reconnect 1", "opts": "-vn"}
 
-descriptions = {
-    "play": "`kc!play flag *song`\n\nThe bot will search for your requested song and play the best result\n"
-            "\nSearch flags:"
-            f"\n` -yt, --youtube{' ' * 14}search on youtube`"
-            f"\n` -sc, --soundcloud{' ' * 11}search on soundcloud`",
-    "playfile": "`kc!playfile`\n\nThe bot will play the file attached to your message",
-    "remove": "`kc!remove index`\n\nRemoves the `index`th item from the queue"
-}
-
 
 class Music(commands.Cog, name="Music", description="Music commands"):
     def __init__(self, bot):
@@ -165,7 +156,7 @@ class Music(commands.Cog, name="Music", description="Music commands"):
             self.logger.log("info", "join", f"Joined {str(ctx.guild) + '/' + str(vc)}")
             await ctx.send(f"Joined `{vc}`!")
 
-    @commands.command(name="play", brief="Bot plays your requested song", description=descriptions["play"])
+    @commands.command(name="play", brief="Bot plays your requested song")
     async def play(self, ctx, *args):
         args = list(args)
         if args[0].startswith("-"):
@@ -209,7 +200,7 @@ class Music(commands.Cog, name="Music", description="Music commands"):
         else:
             await ctx.send("The queue is empty")
 
-    @commands.command(name="playfile", brief="Plays your file", description=descriptions["playfile"])
+    @commands.command(name="playfile", brief="Plays your file")
     async def playfile(self, ctx):
         author_voice = ctx.author.voice
         voice_client = ctx.guild.voice_client
@@ -295,7 +286,7 @@ class Music(commands.Cog, name="Music", description="Music commands"):
         self.inactivity.cancel()
         await ctx.send("Left voice channel")
 
-    @commands.command(name="remove", brief="Removes an item from the queue", description=descriptions["remove"])
+    @commands.command(name="remove", brief="Removes an item from the queue")
     async def remove(self, ctx, index: int):
         if not 1 < index <= len(self.music_queue):
             raise IndexError("Index out of range")

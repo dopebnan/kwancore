@@ -78,6 +78,18 @@ bot = Bot(command_prefix="kc!")
 bot.config = config
 bot.logger = logger
 bot.errors = errors
+bot.descriptions = {
+    "play": ("`kc!play flag *song`\n\nThe bot will search for your requested song and play the best result\n"
+             "\nSearch flags:"
+             f"\n` -yt, --youtube{' ' * 14}search on youtube`"
+             f"\n` -sc, --soundcloud{' ' * 11}search on soundcloud`"),
+    "playfile": "`kc!playfile`\n\nThe bot will play the file attached to your message",
+    "remove": "`kc!remove index`\n\nRemoves the `index`th item from the queue",
+    "settings": ("`kc!settings key value`\n"
+                 "\n`key` is the setting you want to change"
+                 "\n`value` is what you will change it to\n"
+                 "\neg. `kc!settings pic_cooldown 10`")
+}
 bot.temp_warning = 0
 
 
