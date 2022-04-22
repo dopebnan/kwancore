@@ -18,7 +18,6 @@ ffmpeg_opts = {"bopts": "-reconnect 1", "opts": "-vn"}
 
 class Music(commands.Cog, name="Music", description="Music commands"):
     def __init__(self, bot):
-        Music.color = discord.Color.random()
         self.logger = bot.logger
         self.bot = bot
         self.checks = 0

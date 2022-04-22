@@ -14,7 +14,7 @@ def terminal(cmd):
         process.wait()
         f.seek(0)
         result = f.read()
-    return result
+    return result.decode("utf-8")
 
 
 def save_traceback(error):

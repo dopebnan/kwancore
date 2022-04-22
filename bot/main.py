@@ -24,8 +24,9 @@ import yaml
 import json
 import traceback
 
-from shortcuts import easylogger, misc
-import embeds, errors
+import shortcuts
+import embeds
+import errors
 
 import discord
 from discord.ext import commands, tasks
@@ -36,13 +37,14 @@ if not os.path.isdir("logs"):
 if not os.path.isdir("traceback"):
     os.mkdir("traceback/")
 
-easylogger.add_level("command", 21)
-logger = easylogger.Logger("logs/log.txt", "$time $cwfile: [$level] $arg: $message")
+
+logger = shortcuts.Logger("logs/log.txt", "$time $cwfile: [$level] $arg: $message")
+logger.add_level("command", 21)
 
 
 def default_settings():
     with open("assets/settings.json", 'w') as f:
-        json.dump(config["default_settings"], f)
+        json.dump(config["default_settings"], f, indent=2)
     with open("assets/settings.json") as f:
         sttngs = json.load(f)
     logger.log("info", "initialization/default_settings", "Created a default config.json")
@@ -118,7 +120,7 @@ async def temp_task():
     await bot.wait_until_ready()
     try:
         logger.log("info", "temp_task", "trying to get temperature")
-        temp = float(misc.terminal("vcgencmd measure_temp").split('=', 1)[1].split("'", 1)[0])
+        temp = float(shortcuts.terminal("vcgencmd measure_temp").split('=', 1)[1].split("'", 1)[0])
     except:
         temp = 0
         logger.log("warn", "temp_task", "couldn't get temperature, are you sure this is a raspberrypi?")
@@ -204,7 +206,7 @@ async def on_command_error(ctx, error):
         embed = embeds.command_not_found()
 
     else:
-        err_id = misc.save_traceback(error)
+        err_id = shortcuts.save_traceback(error)
         error_embed_parts = error_message.split(':', 1)
         embed = discord.Embed(title=error_embed_parts[0], description=error_embed_parts[1], color=0xE3170A)
         embed.set_footer(text=f"Error ID: {err_id}")

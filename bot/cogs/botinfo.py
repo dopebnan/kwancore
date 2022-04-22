@@ -2,21 +2,15 @@
 kwancore, an extensive discord.py bot template
 Copyright (C) 2022  dopebnan
 """
-
-import yaml
-
 import discord
 from discord.ext import commands
 
 
 class BotInfo(commands.Cog, name="Bot Info", description="Stuff about the bot"):
     def __init__(self, bot):
-        BotInfo.color = 0x5de7b4
-        self.logger = bot.logger
-        with open("assets/config.yaml") as file:
-            self.config = yaml.safe_load(file)
-            self.logger.log("info", "initialization", f"loaded {file.name}")
         self.bot = bot
+        self.logger = bot.logger
+        self.config = bot.config
 
     @commands.command(name="changelog", aliases=["changes", "updates"], brief="Sends the changelog")
     async def info(self, ctx):

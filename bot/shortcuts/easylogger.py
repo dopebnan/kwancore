@@ -8,12 +8,6 @@ import inspect
 levels = {"": 0, "info": 10, "warn": 20, "error": 30, "critical": 40}
 
 
-def add_level(level_name, level: int):
-    """To add another level to the logger"""
-    levels[level_name.lower()] = level
-    return levels
-
-
 class Logger:
     def __init__(self, file, format, level=""):
         """The main class you need to set up before logging anything"""
@@ -43,3 +37,8 @@ class Logger:
             print(result)
             with open(self.file, 'a') as f:
                 f.write(result + '\n')
+
+    def add_level(self, level_name, level: int):
+        """To add another level to the logger"""
+        self.levels[level_name.lower()] = level
+        return self.levels
