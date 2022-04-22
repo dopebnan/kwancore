@@ -191,7 +191,7 @@ class Music(commands.Cog, name="Music", description="Music commands"):
         if not voice_client.is_playing():
             await self.play_music()
 
-    @commands.command(name="queue", brief="shows the queue")
+    @commands.command(name="queue", brief="Shows the queue")
     async def queue(self, ctx):
         if self.music_queue:
             result = misc.queue_format(self.music_queue, self.queue_index)
@@ -292,7 +292,7 @@ class Music(commands.Cog, name="Music", description="Music commands"):
 
         await ctx.send(f"Removed `{self.music_queue.pop(index - 1)[0]['title']}` from the queue")
 
-    @commands.command(name="lyrics", brief="Searched for the song's lyrics")
+    @commands.command(name="lyrics", brief="Searches for the currently playing lyrics")
     async def lyrics(self, ctx):
         if not ctx.guild.voice_client.is_playing:
             raise self.bot.errors.VoiceClientError("voice_client isn't playing anything")

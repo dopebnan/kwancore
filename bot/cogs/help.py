@@ -11,7 +11,7 @@ class Help(commands.Cog, name="Help", description="Help commands"):
     @commands.command(name="help", brief="Help message")
     async def help(self, ctx, arg=None):
         if not arg:
-            result = "```python\n"
+            result = "```bash\n"
             for cog in self.bot.cogs:
                 result += f"{cog}\n# {self.bot.cogs[cog].description}\n"
                 self.logger.log("info", "help", f"Set-up the core of '{cog}' msg")

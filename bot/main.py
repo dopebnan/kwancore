@@ -89,9 +89,14 @@ bot.descriptions = {
     "playfile": "`kc!playfile`\n\nThe bot will play the file attached to your message",
     "remove": "`kc!remove [index]`\n\nRemoves the `index`th item from the queue",
     "settings": ("`kc!settings [key] [value]`\n"
-                 "\n`key` is the setting you want to change"
-                 "\n`value` is what you will change it to\n"
-                 "\neg. `kc!settings pic_cooldown 10`")
+                 "`kc!settings [mode]`\n"
+                 "\nChange the value of each `key` to `value`"
+                 "\neg. `kc!settings pic_cooldown 10`\n"
+                 "\nModes:\n"
+                 "`kc!settings reset    resets every settings to the default value`\n"
+                 "`kc!settings          displays the settings`"),
+    "update": ("`kc!update [flag]`\n"
+               "\nUse the `--help` flag for help")
 }
 bot.temp_warning = 0
 

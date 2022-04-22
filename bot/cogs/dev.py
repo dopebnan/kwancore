@@ -63,7 +63,7 @@ class Dev(commands.Cog, name="Developer Commands", description="Commands that ar
                   f"```")
         await ctx.send(result)
 
-    @commands.command(name="update")
+    @commands.command(name="update", brief="Update the bot, or reset it to a commit.")
     async def update(self, ctx, flag="-m"):
         status = terminal("cd ../ && git fetch && git status").split('\n', 3)[1]
         h = False
