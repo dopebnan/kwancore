@@ -4,6 +4,7 @@ Copyright (C) 2022  dopebnan
 """
 import json
 import os
+import time
 from platform import platform, python_version
 from shortcuts import terminal
 
@@ -144,11 +145,16 @@ class Dev(commands.Cog, name="Developer Commands", description="Commands that ar
         self.logger.log("info", "settings", "Sent settings embed")
 
     @commands.command(name="log", brief="DMs you the log file, or logs a comment")
-    async def log(self, ctx):
-        user = ctx.message.author
-        log = discord.File("./logs/log.txt")
-        await user.send("The log file", file=log)
-        await ctx.send("Check DMs")
+    async def log(self, ctx, arg=None):
+        if not arg:
+            user = ctx.message.author
+            log = discord.File("./logs/log.txt")
+            await user.send("The log file", file=log)
+            await ctx.send("Check DMs")
+        elif arg == "--create-new" or arg == "-n":
+            os.rename("./logs/log.txt", f"./logs/log{time.strftime(f'%Y-%m-%dT%H:%M:%SZ', time.gmtime())}")
+            self.logger.log("info", "log/arg_n", "Created a new log file.")
+            await ctx.send("Created a new log file")
 
 
 def setup(bot):
