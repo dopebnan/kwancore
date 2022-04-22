@@ -48,7 +48,7 @@ class Dev(commands.Cog, name="Developer Commands", description="Commands that ar
     async def update(self, ctx, flag="-m"):
         status = terminal("cd ../ && git fetch && git status").split('\n', 3)[1]
         h = False
-        if flag == '-h' or "--help":
+        if flag == '-h' or flag == "--help":
             msg = ("```bash\n"
                    "kc!update [mode]\n"
                    "Update or reset the bot\n"

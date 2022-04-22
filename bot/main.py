@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 """
 kwancore, an extensive discord.py bot template
 Copyright (C) 2022  dopebnan
