@@ -47,7 +47,7 @@ def default_settings():
         json.dump(config["default_settings"], f, indent=2)
     with open("assets/settings.json") as f:
         sttngs = json.load(f)
-    logger.log("info", "initialization/default_settings", "Created a default config.json")
+    logger.log("info", "initialization/default_settings", "Created a default settings.json")
     return sttngs
 
 
@@ -81,13 +81,13 @@ bot.config = config
 bot.logger = logger
 bot.errors = errors
 bot.descriptions = {
-    "play": ("`kc!play flag *song`\n\nThe bot will search for your requested song and play the best result\n"
+    "play": ("`kc!play [flag] [*song]`\n\nThe bot will search for your requested song and play the best result\n"
              "\nSearch flags:"
              f"\n` -yt, --youtube{' ' * 14}search on youtube`"
              f"\n` -sc, --soundcloud{' ' * 11}search on soundcloud`"),
     "playfile": "`kc!playfile`\n\nThe bot will play the file attached to your message",
-    "remove": "`kc!remove index`\n\nRemoves the `index`th item from the queue",
-    "settings": ("`kc!settings key value`\n"
+    "remove": "`kc!remove [index]`\n\nRemoves the `index`th item from the queue",
+    "settings": ("`kc!settings [key] [value]`\n"
                  "\n`key` is the setting you want to change"
                  "\n`value` is what you will change it to\n"
                  "\neg. `kc!settings pic_cooldown 10`")
@@ -121,7 +121,7 @@ async def temp_task():
     try:
         logger.log("info", "temp_task", "trying to get temperature")
         temp = float(shortcuts.terminal("vcgencmd measure_temp").split('=', 1)[1].split("'", 1)[0])
-    except:
+    except IndexError:
         temp = 0
         logger.log("warn", "temp_task", "couldn't get temperature, are you sure this is a raspberrypi?")
 
