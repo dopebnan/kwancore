@@ -143,6 +143,13 @@ class Dev(commands.Cog, name="Developer Commands", description="Commands that ar
         await ctx.send(embed=embed)
         self.logger.log("info", "settings", "Sent settings embed")
 
+    @commands.command(name="log", brief="DMs you the log file, or logs a comment")
+    async def log(self, ctx):
+        user = ctx.message.author
+        log = discord.File("./logs/log.txt")
+        await user.send("The log file", file=log)
+        await ctx.send("Check DMs")
+
 
 def setup(bot):
     bot.add_cog(Dev(bot))
