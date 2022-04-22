@@ -67,15 +67,15 @@ class Dev(commands.Cog, name="Developer Commands", description="Commands that ar
                            "Do you want to continue? [Y/n]")
             cmd = "cd ../ && git reset --hard"
         elif flag == '--hard-pull':
-            await ctx.send("This will reset the current version and update to the latest commit.\n"
+            await ctx.send(f"{status}\nThis will reset the current version and update to the latest commit.\n"
                            "Do you want to continue? [Y/n]")
             cmd = "cd ../ && git reset --hard && git pull --no-stat"
         elif flag == '-m' or flag == "--merge":
-            await ctx.send("This will join the current version with the latest commit.\n"
+            await ctx.send(f"{status}\nThis will join the current version with the latest commit.\n"
                            "Do you want to continue? [Y/n]")
             cmd = "cd ../ && git merge --no-commit --no-stat -v"
         else:
-            raise self.bot.errors.BadArgument(flag, "That flag doesn't exist.")
+            raise self.bot.errors.BadArgument("That flag doesn't exist.", flag)
 
         if not h:
             def check(m):
@@ -85,7 +85,7 @@ class Dev(commands.Cog, name="Developer Commands", description="Commands that ar
 
             if msg.content.lower() == 'y':
                 pull = terminal(cmd)
-                await ctx.send(f"{pull}.")
+                await ctx.send(f"{pull}")
             else:
                 await ctx.send("Aborted.")
 
