@@ -4,7 +4,7 @@ Copyright (C) 2022  dopebnan
 """
 import os
 from platform import platform, python_version
-from bot.shortcuts import terminal
+from shortcuts import terminal
 
 import discord
 from discord.ext import commands
@@ -21,7 +21,7 @@ class Dev(commands.Cog, name="Developer Commands", description="Commands that ar
         dev_role = get(ctx.guild.roles, name=self.bot.config["dev_role"])
         return dev_role in ctx.author.roles
 
-    @commands.command(name="stats")
+    @commands.command(name="sysinfo", brief="Display system information")
     async def stats(self, ctx):
         pic_num = str(len(os.listdir("assets/images/")))
         header = f"{self.bot.user.name}@[kwanCore]"
@@ -43,6 +43,51 @@ class Dev(commands.Cog, name="Developer Commands", description="Commands that ar
                   f"Pics: {pic_num}\n"
                   f"```")
         await ctx.send(result)
+
+    @commands.command(name="update")
+    async def update(self, ctx, flag="-m"):
+        status = terminal("cd ../ && git fetch && git status").split('\n', 3)[1]
+        h = False
+        if flag == '-h' or "--help":
+            msg = ("```bash\n"
+                   "kc!update [mode]\n"
+                   "Update or reset the bot\n"
+                   "Modes:\n"
+                   f" -r, --reset{' ' * 17}delete changes and revert back to the original commit\n"
+                   f" --hard-pull{' ' * 17}delete changes and update to the latest commit\n"
+                   f" -m, --merge{' ' * 17}save changes and update to the latest commit\n"
+                   f" -h, --help{' ' * 18}display this help message and exit"
+                   f"```"
+                   )
+            h = True
+            await ctx.send(msg)
+
+        elif flag == '-r' or flag == "--reset":
+            await ctx.send("This will reset the current version to the specified commit.\n"
+                           "Do you want to continue? [Y/n]")
+            cmd = "cd ../ && git reset --hard"
+        elif flag == '--hard-pull':
+            await ctx.send("This will reset the current version and update to the latest commit.\n"
+                           "Do you want to continue? [Y/n]")
+            cmd = "cd ../ && git reset --hard && git pull --no-stat"
+        elif flag == '-m' or flag == "--merge":
+            await ctx.send("This will join the current version with the latest commit.\n"
+                           "Do you want to continue? [Y/n]")
+            cmd = "cd ../ && git merge --no-commit --no-stat -v"
+        else:
+            raise self.bot.errors.BadArgument(flag, "That flag doesn't exist.")
+
+        if not h:
+            def check(m):
+                return m.author == ctx.author
+
+            msg = await self.bot.wait_for('message', check=check, timeout=30)
+
+            if msg.content.lower() == 'y':
+                pull = terminal(cmd)
+                await ctx.send(f"{pull}.")
+            else:
+                await ctx.send("Aborted.")
 
 
 def setup(bot):

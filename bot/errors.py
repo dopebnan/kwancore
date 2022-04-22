@@ -30,8 +30,10 @@ class NoVoiceClient(VoiceClientError):
     def __init__(self, message="Bot isn't in any voice channel"):
         super().__init__(message)
 
+
 class EmptyQueue(VoiceClientError):
     pass
+
 
 class BadArgument(GenericError):
     def __init__(self, message, arg):
