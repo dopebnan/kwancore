@@ -217,8 +217,11 @@ async def on_command_error(ctx, error):
 
     else:
         err_id = shortcuts.save_traceback(error)
-        error_embed_parts = error_message.split(':', 1)
-        embed = discord.Embed(title=error_embed_parts[0], description=error_embed_parts[1], color=0xE3170A)
+        try:
+            error_embed_parts = error_message.split(':', 1)
+            embed = discord.Embed(title=error_embed_parts[0], description=error_embed_parts[1], color=0xE3170A)
+        except IndexError:
+            embed = discord.Embed(title="Error:", description=error_message, color=0xE3170A)
         embed.set_footer(text=f"Error ID: {err_id}")
 
     await ctx.send(embed=embed)
