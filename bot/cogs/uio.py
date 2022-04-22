@@ -32,6 +32,15 @@ class UIO(commands.Cog, name="UserInput/Output", description="General I/O comman
     async def echo(self, ctx, msg):
         await ctx.send(msg)
 
+    @commands.command(name="source_code", brief="Redirects you to the source code.")
+    async def source_code(self, ctx):
+        embed = discord.Embed(
+            title="Source code",
+            description="You can find the sourcecode on [GitHub](https://github.com/dopebnan/kwancore)",
+            color=discord.Color.random()
+        )
+        await ctx.send(embed=embed)
+
 
 def setup(bot):
     bot.add_cog(UIO(bot))
