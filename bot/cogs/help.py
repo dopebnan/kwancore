@@ -1,6 +1,28 @@
 import discord
 from discord.ext import commands
 
+descriptions = {
+    "play": ("`kc!play [flag] [*song]`\n\nThe bot will search for your requested song and play the best result\n"
+             "\nSearch flags:"
+             f"\n` -yt, --youtube{' ' * 7}search on youtube`"
+             f"\n` -sc, --soundcloud{' ' * 4}search on soundcloud`"),
+    "playfile": "`kc!playfile`\n\nThe bot will play the file attached to your message",
+    "remove": "`kc!remove [index]`\n\nRemoves the `index`th item from the queue",
+    "settings": ("`kc!settings [key] [value]`\n"
+                 "`kc!settings [mode]`\n"
+                 "\nChange the value of each `key` to `value`"
+                 "\neg. `kc!settings pic_cooldown 10`\n"
+                 "\nModes:\n"
+                 "`kc!settings reset    resets every settings to the default value`\n"
+                 "`kc!settings          displays the settings`"),
+    "update": ("`kc!update [flag]`\n"
+               "\nUse the `--help` flag for help"),
+    "log": ("`kc!log [flag]`\n"
+            "\nIf no flags are present, DMs you the log\n"
+            "\nFlags:\n"
+            "` -n, --create-new    creates a new log.txt, and saves the old one`")
+}
+
 
 class Help(commands.Cog, name="Help", description="Help commands"):
     def __init__(self, bot):
@@ -29,9 +51,9 @@ class Help(commands.Cog, name="Help", description="Help commands"):
                 raise self.bot.errors.BadArgument("That command doesn't exist", arg)
             else:
                 cmds = self.bot.all_commands
-                if arg in self.bot.descriptions:
-                    title = self.bot.descriptions[arg].split("\n\n", 1)[0]
-                    desc = self.bot.descriptions[arg].split("\n\n", 1)[1]
+                if arg in descriptions:
+                    title = descriptions[arg].split("\n\n", 1)[0]
+                    desc = descriptions[arg].split("\n\n", 1)[1]
                 else:
                     title = f"`{self.bot.command_prefix}{arg}`"
                     desc = cmds[arg].brief

@@ -47,8 +47,8 @@ class Music(commands.Cog, name="Music", description="Music commands"):
                     "artist": song["uploader"],
                     "length": int(song["duration"])
                 }
-            self.music_queue.append([info, ctx.guild.voice_client, ctx.author])
-            self.logger.log("info", "play", f"Added {info['title']} to the queue")
+                self.music_queue.append([info, ctx.guild.voice_client, ctx.author])
+                self.logger.log("info", "play", f"Added {info['title']} to the queue")
 
         return song
 

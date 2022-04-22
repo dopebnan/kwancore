@@ -1,7 +1,6 @@
 """
 Copyright (c) 2022 dopebnan
 """
-import os
 import subprocess
 import traceback
 import tempfile
@@ -60,5 +59,3 @@ def queue_format(queue, index):
         result += "\n" + "You've hit the end of the queue!".center(42) + "\n```"  # add back end queue line
 
     return result
-
-

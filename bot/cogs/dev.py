@@ -67,6 +67,7 @@ class Dev(commands.Cog, name="Developer Commands", description="Commands that ar
     @commands.command(name="update", brief="Update the bot, or reset it to a commit.")
     async def update(self, ctx, flag="-m"):
         status = terminal("cd ../ && git fetch && git status").split('\n', 3)[1]
+        cmd = ''
         h = False
         if flag == '-h' or flag == "--help":
             msg = ("```bat\n"
@@ -144,7 +145,7 @@ class Dev(commands.Cog, name="Developer Commands", description="Commands that ar
         await ctx.send(embed=embed)
         self.logger.log("info", "settings", "Sent settings embed")
 
-    @commands.command(name="log", brief="DMs you the log file, or logs a comment")
+    @commands.command(name="log", brief="DMs you the log file")
     async def log(self, ctx, arg=None):
         if not arg:
             user = ctx.message.author

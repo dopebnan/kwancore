@@ -46,9 +46,8 @@ def default_settings():
     with open("assets/settings.json", 'w') as f:
         json.dump(config["default_settings"], f, indent=2)
     with open("assets/settings.json") as f:
-        sttngs = json.load(f)
-    logger.log("info", "initialization/default_settings", "Created a default settings.json")
-    return sttngs
+        logger.log("info", "initialization/default_settings", "Created a default settings.json")
+        return json.load(f)
 
 
 try:
@@ -81,23 +80,6 @@ bot.config = config
 bot.settings = settings
 bot.logger = logger
 bot.errors = errors
-bot.descriptions = {
-    "play": ("`kc!play [flag] [*song]`\n\nThe bot will search for your requested song and play the best result\n"
-             "\nSearch flags:"
-             f"\n` -yt, --youtube{' ' * 14}search on youtube`"
-             f"\n` -sc, --soundcloud{' ' * 11}search on soundcloud`"),
-    "playfile": "`kc!playfile`\n\nThe bot will play the file attached to your message",
-    "remove": "`kc!remove [index]`\n\nRemoves the `index`th item from the queue",
-    "settings": ("`kc!settings [key] [value]`\n"
-                 "`kc!settings [mode]`\n"
-                 "\nChange the value of each `key` to `value`"
-                 "\neg. `kc!settings pic_cooldown 10`\n"
-                 "\nModes:\n"
-                 "`kc!settings reset    resets every settings to the default value`\n"
-                 "`kc!settings          displays the settings`"),
-    "update": ("`kc!update [flag]`\n"
-               "\nUse the `--help` flag for help")
-}
 bot.temp_warning = 0
 
 
@@ -205,7 +187,7 @@ async def on_message(message):
 
 @bot.event
 async def on_command_error(ctx, error):
-    cmd = ctx.command.qualified_name if ctx.command else ctx.command
+    # cmd = ctx.command.qualified_name if ctx.command else ctx.command
     error_message = str(error).replace("Command raised an exception: ", '')
 
     if isinstance(error, commands.CommandOnCooldown):

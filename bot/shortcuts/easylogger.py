@@ -9,12 +9,12 @@ levels = {"": 0, "info": 10, "warn": 20, "error": 30, "critical": 40}
 
 
 class Logger:
-    def __init__(self, file, format, level=""):
+    def __init__(self, file, format_, level=""):
         """The main class you need to set up before logging anything"""
         self.levels = levels
         self.level = level.lower()
         self.file = file
-        self.format = format
+        self.format = format_
 
     def log(self, level='', arg='', message='', cwfile=''):
         """logs the message"""
