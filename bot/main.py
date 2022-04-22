@@ -20,11 +20,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import os
 import random
-import time
 import unicodedata
 import yaml
 import json
-import traceback
 
 import shortcuts
 import embeds
@@ -80,6 +78,7 @@ status_msg = ["KWANCORE!!!", "kc!"]
 bot = Bot(command_prefix="kc!")
 
 bot.config = config
+bot.settings = settings
 bot.logger = logger
 bot.errors = errors
 bot.descriptions = {
@@ -175,10 +174,14 @@ def reload():
 
 @bot.event
 async def on_command_completion(ctx):
+    cmd = ctx.command.qualified_name
     logger.log("command", f"{str(ctx.guild) + '/#' + ctx.channel.name}",
                ctx.message.content, f"<{ctx.message.author}, {ctx.message.author.id}>")
-    if ctx.command.qualified_name == "settings":
+    if cmd == "update":
         reload()
+    elif cmd == "settings":
+        bot.reload_extension("cogs.uio")
+        logger.log("info", "on_command_completion/reload", "reloaded uio.py")
 
 
 @bot.event

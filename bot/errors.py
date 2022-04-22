@@ -47,3 +47,8 @@ class BadAttachment(BadArgument):
 
 class NoAttachment(GenericError):
     pass
+
+
+class RoleError(GenericError):
+    def __init__(self, role, author):
+        super().__init__(f"'{role}' not in '{author}'.roles")
