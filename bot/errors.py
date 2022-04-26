@@ -52,3 +52,13 @@ class NoAttachment(GenericError):
 class RoleError(GenericError):
     def __init__(self, role, author):
         super().__init__(f"'{role}' not in '{author}'.roles")
+
+
+class MoneyError(GenericError):
+    pass
+
+
+class ProfileAlreadyExists(MoneyError):
+    def __init__(self, user, msg=None):
+        msg = msg or f"{user} already has a profile"
+        super().__init__(msg)

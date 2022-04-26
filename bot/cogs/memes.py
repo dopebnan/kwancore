@@ -1,5 +1,4 @@
 import aiohttp
-import discord
 import asyncpraw
 from discord.ext import commands
 

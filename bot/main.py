@@ -58,6 +58,11 @@ except FileNotFoundError:
     logger.log("critical", "initialization", "config file not found, stopping..")
     raise FileNotFoundError("Config file not found.")
 
+if not os.path.isfile("usercontent/profiles.json"):
+    with open("usercontent/profiles.json", 'w') as file:
+        json.dump({}, file)
+
+
 try:
     with open("usercontent/settings.json") as file:
         settings = json.load(file)
@@ -71,6 +76,7 @@ except json.decoder.JSONDecodeError:
 if len(settings) != len(config["default_settings"]):
     logger.log("error", "initialization", f"Bad settings file, defaulting..")
     settings = default_settings()
+
 
 status_msg = ["KWANCORE!!!", "kc!"]
 
