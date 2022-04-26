@@ -20,7 +20,9 @@ descriptions = {
     "log": ("`kc!log [flag]`\n"
             "\nIf no flags are present, DMs you the log\n"
             "\nFlags:\n"
-            "` -n, --create-new    creates a new log.txt, and saves the old one`")
+            "` -n, --create-new    creates a new log.txt, and saves the old one`"),
+    "random_image": ("`kc!random_image [subreddit]`\n"
+                     "\nGets a random image from r/`subreddit`")
 }
 
 
