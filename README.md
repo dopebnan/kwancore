@@ -5,6 +5,7 @@
 <img alt="discord.py" src="https://img.shields.io/badge/-discord.py-5865F2">
 <img alt="License: GPLv3" src="https://img.shields.io/github/license/dopebnan/kwancore">
 <img alt="Commit Activity" src="https://img.shields.io/github/commit-activity/m/dopebnan/kwancore">
+<br>
 </div>
 
 [kwanCore] is a template-esque discord.py bot.
@@ -18,7 +19,30 @@ You should modify it according to your desired results.
 * [Async PRAW](https://github.com/praw-dev/asyncpraw)
 
 ## Self-hosting
-If you're here, you probably know how to host a discord bot already :)
+You need to create a file named `config.yaml` inside `bot/usercontent/`.
+The contents of that file have to look something like this:
+```yaml
+warningChannel:  # The snowflake ID of the discord channel where the warnings would be sent to
+token:  # Your bot's discord token
+genius_token:  # A Genius.com token for lyrics (https://genius.com/api-clients/new)
+
+reddit:  # Here are the Reddit configs (https://www.reddit.com/prefs/apps/)
+  client_id:  # 14-character string under "personal use script"
+  client_secret:  # 27-character string under "secret"
+  password:  # The password for the Reddit account used for said application 
+  user_agent:  # The user-agent for the application (should follow this format: <platform>:<app ID>:<version string> (by /u/<reddit username>))
+  username:  # The username of the Reddit accound used for said application
+
+dev_role:  # NAME of the developer role used to access the dev cog
+
+default_settings:  # Default settings
+  pic_cooldown:  # cooldown between pic commands IN SECONDS
+  pic_cooldown_bool:  # If it should display a cooldown message for pic commands
+  echo_cooldown:  # cooldown between echo commands IN SECONDS
+```
+
+Then you just need to start the bot by running `bot/main.py` in a terminal.
+It will create some files it needs, and then you're good to go!
 
 ## Notices
 
