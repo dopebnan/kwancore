@@ -43,7 +43,7 @@ class Dev(commands.Cog, name="Developer Commands", description="Commands that ar
 
     @commands.command(name="sysinfo", brief="Display system information")
     async def stats(self, ctx):
-        pic_num = str(len(os.listdir("assets/images/")))
+        pic_num = str(len(os.listdir("usercontent/images/")))
         header = f"{self.bot.user.name}@[kwanCore]"
         latest_ver = terminal("git tag -l").split('\n')[0]
         try:
@@ -58,7 +58,7 @@ class Dev(commands.Cog, name="Developer Commands", description="Commands that ar
                   f"Uptime: {terminal(b'uptime -p').replace('up ', '')}"
                   f"Python: {python_version()}\n"
                   f"Discord.py: {discord.__version__}\n"
-                  f"Current Version: {self.bot.config['version']}\n"
+                  f"Current Version: {self.bot.version}\n"
                   f"Latest Version: {latest_ver}\n"
                   f"Pics: {pic_num}\n"
                   f"```")
@@ -115,7 +115,7 @@ class Dev(commands.Cog, name="Developer Commands", description="Commands that ar
     async def settings(self, ctx, *args: str):
         if len(args) == 1:
             if args == ("reset",):
-                with open("assets/settings.json", 'w') as f:
+                with open("usercontent/settings.json", 'w') as f:
                     self.settings = self.config["default_settings"]
                     json.dump(self.settings, f, indent=2)
                     self.logger.log("info", "settings/reset", "Reset the settings")
@@ -125,7 +125,7 @@ class Dev(commands.Cog, name="Developer Commands", description="Commands that ar
             if args[0] not in self.settings:
                 raise KeyError("That setting doesn't exist.")
             self.settings[args[0]] = int(args[1]) if not args[0].endswith("bool") else is_bool(args[1])
-            with open("assets/settings.json", 'w') as f:
+            with open("usercontent/settings.json", 'w') as f:
                 json.dump(self.settings, f)
             self.logger.log("info", "settings/change", f"Changed {args[0]} to {args[1]}.")
 

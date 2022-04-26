@@ -30,7 +30,7 @@ class BotInfo(commands.Cog, name="Bot Info", description="Stuff about the bot"):
         )
         embed.add_field(
             name="Version:",
-            value=f"{self.config['version']}",
+            value=f"{self.bot.version}",
             inline=True
         )
         await ctx.send(embed=embed)

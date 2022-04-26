@@ -8,7 +8,7 @@ import discord
 from discord.ext import commands
 from discord.ext.commands import BucketType
 
-with open("assets/settings.json") as file:
+with open("usercontent/settings.json") as file:
     settings = json.load(file)
 
 
@@ -20,7 +20,7 @@ class UIO(commands.Cog, name="UserInput/Output", description="General I/O comman
     @commands.command(name="pic", brief="Sends a picture.")
     @commands.cooldown(1, settings["pic_cooldown"], BucketType.user)
     async def pic(self, ctx):
-        img = "assets/images/kwancore.png"
+        img = "usercontent/images/kwancore.png"
         await ctx.send(file=discord.File(img))
 
         if settings["pic_cooldown_bool"]:

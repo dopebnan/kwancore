@@ -43,15 +43,15 @@ logger.add_level("command", 21)
 
 
 def default_settings():
-    with open("assets/settings.json", 'w') as f:
+    with open("usercontent/settings.json", 'w') as f:
         json.dump(config["default_settings"], f, indent=2)
-    with open("assets/settings.json") as f:
+    with open("usercontent/settings.json") as f:
         logger.log("info", "initialization/default_settings", "Created a default settings.json")
         return json.load(f)
 
 
 try:
-    with open("assets/config.yaml") as file:
+    with open("usercontent/config.yaml") as file:
         config = yaml.safe_load(file)
         logger.log("info", "initialization", f"loaded {file.name}")
 except FileNotFoundError:
@@ -59,7 +59,7 @@ except FileNotFoundError:
     raise FileNotFoundError("Config file not found.")
 
 try:
-    with open("assets/settings.json") as file:
+    with open("usercontent/settings.json") as file:
         settings = json.load(file)
         logger.log("info", "initialization", f"loaded {file.name}")
 except FileNotFoundError:
@@ -80,6 +80,7 @@ bot.config = config
 bot.settings = settings
 bot.logger = logger
 bot.errors = errors
+bot.version = "0.6-a"
 bot.temp_warning = 0
 
 
