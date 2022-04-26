@@ -6,10 +6,11 @@
 <img alt="License: GPLv3" src="https://img.shields.io/github/license/dopebnan/kwancore">
 <img alt="Commit Activity" src="https://img.shields.io/github/commit-activity/m/dopebnan/kwancore">
 <br>
+<p>[kwanCore] is a template-esque discord.py bot.
+  You should modify it according to your desired results.</p>
 </div>
 
-[kwanCore] is a template-esque discord.py bot.
-You should modify it according to your desired results.
+
 
 ## Prerequisites
 * [discord.py](https://github.com/Rapptz/discord.py)
