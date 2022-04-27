@@ -58,6 +58,28 @@ class Money(commands.Cog, name="Money", description="Money and stuff"):
         embed.add_field(name="Deaths", value=f"`{data['deaths']}`")
         await ctx.send(embed=embed)
 
+    @commands.command(name="inventory", brief="look at your inv")
+    async def inventory(self, ctx):
+        embed = discord.Embed(
+            title=f"{ctx.author.name}'s inventory",
+            color=ctx.author.color
+        )
+        with database:
+            c.execute(f"SELECT * FROM profiles WHERE id={ctx.author.id}")
+            profile = c.fetchone()
+            if not profile:
+                raise self.bot.errors.ProfileNotFound(ctx.author.name)
+
+            items = {}
+            for item in profile['inventory'].split(','):
+                c.execute(f"SELECT * FROM items WHERE id={str(item)}")
+                item = c.fetchone()
+                embed.add_field(name=f"{item['emoji']} {item['name']}",
+                                value=f"**{item['desc']}**\nPrice: {item['trade_val']}$~{item['price']}$\n"
+                                      f"*ID `{item['id']}`* - {item['type']}",
+                                inline=False)
+        await ctx.send(embed=embed)
+
 
 def setup(bot):
     bot.add_cog(Money(bot))
