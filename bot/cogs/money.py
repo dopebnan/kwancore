@@ -14,6 +14,16 @@ try:
                  );""")
 except sqlite3.OperationalError:
     pass
+try:
+    c.execute("""CREATE TABLE "items" (
+                 id INT UNIQUE, emoji TEXT, name TEXT, desc TEXT, description TEXT, price INT, trade_val INT,
+                 type TEXT, rarity TEXT, bundle TEXT,
+                 PRIMARY KEY("id")
+             );""")
+    c.execute("INSERT INTO items VALUES (0, ':black_large_square:', 'nothing', 'it\'s nothing', 'it\'s nothing',"
+              "0, 0, 'None', 'common', 'starters')")
+except sqlite3.OperationalError:
+    pass
 
 
 class Money(commands.Cog, name="Money", description="Money and stuff"):
@@ -30,7 +40,7 @@ class Money(commands.Cog, name="Money", description="Money and stuff"):
             if c.fetchone():
                 raise self.bot.errors.ProfileAlreadyExists(ctx.author.name)
             c.execute("INSERT INTO profiles VALUES (:id, :name, 1, 1, 500, 0, 100, :inv, 0)",
-                      {"id": ctx.author.id, "name": ctx.author.name, "inv": '0-1,'})
+                      {"id": ctx.author.id, "name": ctx.author.name, "inv": '0,0'})
             c.execute(f"SELECT * FROM profiles")
             print(c.fetchone()["inventory"])
 
