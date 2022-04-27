@@ -7,7 +7,8 @@ __all__ = (
     "BadArgument",
     "BadAttachment",
     "NoAttachment",
-    "EmptyQueue"
+    "EmptyQueue",
+    "ItemNotFound"
 )
 
 
@@ -68,3 +69,7 @@ class ProfileNotFound(MoneyError):
     def __init__(self, user, msg=None):
         msg = msg or f"{user}'s profile doesn't exist, you can make one via `kc!money_start`"
         super().__init__(msg)
+
+
+class ItemNotFound(MoneyError):
+    pass

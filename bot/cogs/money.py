@@ -30,7 +30,7 @@ class Money(commands.Cog, name="Money", description="Money and stuff"):
             if c.fetchone():
                 raise self.bot.errors.ProfileAlreadyExists(ctx.author.name)
             c.execute("INSERT INTO profiles VALUES (:id, :name, 1, 1, 500, 0, 100, :inv, 0)",
-                      {"id": ctx.author.id, "name": ctx.author.name, "inv": ','})
+                      {"id": ctx.author.id, "name": ctx.author.name, "inv": '0,'})
             c.execute(f"SELECT * FROM profiles")
             print(c.fetchone()["inventory"])
 
@@ -79,6 +79,31 @@ class Money(commands.Cog, name="Money", description="Money and stuff"):
                                       f"*ID `{item['id']}`* - {item['type']}",
                                 inline=False)
         await ctx.send(embed=embed)
+
+    @commands.command(name="item", brief="get info about an item")
+    async def item(self, ctx, name):
+        with database:
+            if name.isnumeric():
+                c.execute(f"SELECT * FROM items WHERE id='{name}'")
+                item = c.fetchone()
+            else:
+                c.execute(f"SELECT * FROM items WHERE name='{name.lower()}'")
+                item = c.fetchone()
+
+        embed = discord.Embed(
+            title=f'{item["emoji"]}{item["name"].title()}',
+            description=f"> {item['description']}\n"
+                        f"**PRICE** - `{item['price']}$`\n"
+                        f"**TRADE** - `{item['trade_val']}$`",
+            color=discord.Color.random()
+        )
+        embed.add_field(name="Rarity", value=f"`{item['rarity']}`")
+        embed.add_field(name="Type", value=f"`{item['type']}`")
+        embed.add_field(name="ID", value=f'`{item["id"]}`')
+        embed.add_field(name="Part of", value=f"`{item['bundle']}` bundle", inline=False)
+
+        await ctx.send(embed=embed)
+
 
 
 def setup(bot):
