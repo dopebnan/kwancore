@@ -30,7 +30,7 @@ class Money(commands.Cog, name="Money", description="Money and stuff"):
             if c.fetchone():
                 raise self.bot.errors.ProfileAlreadyExists(ctx.author.name)
             c.execute("INSERT INTO profiles VALUES (:id, :name, 1, 1, 500, 0, 100, :inv, 0)",
-                      {"id": ctx.author.id, "name": ctx.author.name, "inv": '0,'})
+                      {"id": ctx.author.id, "name": ctx.author.name, "inv": '0-1,'})
             c.execute(f"SELECT * FROM profiles")
             print(c.fetchone()["inventory"])
 
@@ -71,10 +71,12 @@ class Money(commands.Cog, name="Money", description="Money and stuff"):
                 raise self.bot.errors.ProfileNotFound(ctx.author.name)
 
             items = {}
-            for item in profile['inventory'].split(','):
+            inv = profile['inventory'].split(',')
+            for item in set(inv):
+                count = ''.join(inv).count(item)
                 c.execute(f"SELECT * FROM items WHERE id={str(item)}")
                 item = c.fetchone()
-                embed.add_field(name=f"{item['emoji']} {item['name']}",
+                embed.add_field(name=f"{item['emoji']} {item['name']} - {count}",
                                 value=f"**{item['desc']}**\nPrice: {item['trade_val']}$~{item['price']}$\n"
                                       f"*ID `{item['id']}`* - {item['type']}",
                                 inline=False)
@@ -103,7 +105,6 @@ class Money(commands.Cog, name="Money", description="Money and stuff"):
         embed.add_field(name="Part of", value=f"`{item['bundle']}` bundle", inline=False)
 
         await ctx.send(embed=embed)
-
 
 
 def setup(bot):
