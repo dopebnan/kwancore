@@ -81,7 +81,7 @@ bot.config = config
 bot.settings = settings
 bot.logger = logger
 bot.errors = errors
-bot.version = "0.6-a"
+bot.version = "0.7-b.1"
 bot.temp_warning = 0
 
 
