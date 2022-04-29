@@ -1,16 +1,14 @@
 <div align="center">
 <img alt="[kwanCore]" src="https://raw.githubusercontent.com/dopebnan/kwancore/main/assets/logo.png">
 <br>
-<img alt="Latest Release" src="https://img.shields.io/github/v/release/dopebnan/kwancore?display_name=release&include_prereleases&sort=semver">
+<img alt="Latest Release" src="https://img.shields.io/github/v/release/dopebnan/kwancore?display_name=release&sort=semver">
 <img alt="discord.py" src="https://img.shields.io/badge/-discord.py-5865F2">
 <img alt="License: GPLv3" src="https://img.shields.io/github/license/dopebnan/kwancore">
 <img alt="Commit Activity" src="https://img.shields.io/github/commit-activity/m/dopebnan/kwancore">
 <br>
-<p>[kwanCore] is a template-esque discord.py bot.
-  You should modify it according to your desired results.</p>
+<p>[kwanCore] is a discord.py bot foundation. Everything is set up for you, you just need to tweak some settings
+for your liking.</p>
 </div>
-
-
 
 ## Prerequisites
 * [discord.py](https://github.com/Rapptz/discord.py)
@@ -21,7 +19,7 @@
 
 ## Self-hosting
 You need to create a file named `config.yaml` inside `bot/usercontent/`.
-The contents of that file have to look something like this:
+That file's contents have to look something like this:
 ```yaml
 warningChannel:  # The snowflake ID of the discord channel where the warnings would be sent to
 token:  # Your bot's discord token
