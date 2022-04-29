@@ -31,7 +31,7 @@ class Memes(commands.Cog, name="Memes", description="Reddit and stuff"):
             submission = await subreddit.random()
             while not await is_pic(submission.url):
                 submission = await subreddit.random()
-            await ctx.send(submission.id)
+            await ctx.send(submission.url)
 
 
 def setup(bot):
