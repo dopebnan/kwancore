@@ -33,7 +33,7 @@ class Money(commands.Cog, name="Money", description="Money and stuff"):
         self.config = bot.config
         self.settings = bot.settings
 
-    @commands.command(name="money_start", brief="Add yourself to the Money experience")
+    @commands.command(name="money_start", brief="Adds you to the Money database")
     async def money_start(self, ctx):
         with database:
             c.execute(f"SELECT * FROM profiles WHERE id={ctx.author.id}")
@@ -68,7 +68,7 @@ class Money(commands.Cog, name="Money", description="Money and stuff"):
         embed.add_field(name="Deaths", value=f"`{data['deaths']}`")
         await ctx.send(embed=embed)
 
-    @commands.command(name="inventory", brief="look at your inv")
+    @commands.command(name="inventory", brief="Displays your inventory")
     async def inventory(self, ctx):
         embed = discord.Embed(
             title=f"{ctx.author.name}'s inventory",
@@ -92,7 +92,7 @@ class Money(commands.Cog, name="Money", description="Money and stuff"):
                                 inline=False)
         await ctx.send(embed=embed)
 
-    @commands.command(name="item", brief="get info about an item")
+    @commands.command(name="item", brief="Searches for an item's stats")
     async def item(self, ctx, name):
         with database:
             if name.isnumeric():

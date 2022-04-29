@@ -2,11 +2,11 @@ import discord
 from discord.ext import commands
 
 descriptions = {
-    "play": ("`kc!play [flag] [*song]`\n\nThe bot will search for your requested song and play the best result\n"
+    "play": ("`kc!play [flag] [*song]`\n\nSearches for your requested song and play the best result\n"
              "\nSearch flags:"
              f"\n` -yt, --youtube{' ' * 7}search on youtube`"
              f"\n` -sc, --soundcloud{' ' * 4}search on soundcloud`"),
-    "playfile": "`kc!playfile`\n\nThe bot will play the file attached to your message",
+    "playfile": "`kc!playfile`\n\nPlays the file attached to your message",
     "remove": "`kc!remove [index]`\n\nRemoves the `index`th item from the queue",
     "settings": ("`kc!settings [key] [value]`\n"
                  "`kc!settings [mode]`\n"
@@ -32,7 +32,7 @@ class Help(commands.Cog, name="Help", description="Help commands"):
         self.bot = bot
         self.logger = bot.logger
 
-    @commands.command(name="help", brief="Help message")
+    @commands.command(name="help", brief="Sends the help message")
     async def help(self, ctx, arg=None):
         if not arg:
             result = "```bash\n"

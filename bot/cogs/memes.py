@@ -23,7 +23,7 @@ class Memes(commands.Cog, name="Memes", description="Reddit and stuff"):
             username=bot.config["reddit"]['username']
         )
 
-    @commands.command(name="random_image", brief="Get a random post from a subreddit")
+    @commands.command(name="random_image", brief="Gets a random image post from a subreddit")
     async def random_image(self, ctx, subreddit):
         async with ctx.typing():
             subreddit = await self.reddit.subreddit(subreddit)
