@@ -1,13 +1,13 @@
 <div align="center">
-<img alt="[kwanCore]" src="https://raw.githubusercontent.com/dopebnan/kwancore/main/assets/logo.png">
+<img alt="[kwanCore] Amethyst" src="https://raw.githubusercontent.com/dopebnan/kwancore/amethyst/assets/amethyst.png">
 <br>
 <img alt="Latest Release" src="https://img.shields.io/github/v/release/dopebnan/kwancore?display_name=release&include_prereleases&sort=semver">
 <img alt="discord.py" src="https://img.shields.io/badge/-discord.py-5865F2">
 <img alt="License: GPLv3" src="https://img.shields.io/github/license/dopebnan/kwancore">
-<img alt="Commit Activity" src="https://img.shields.io/github/commit-activity/m/dopebnan/kwancore">
+<img alt="Commit Activity" src="https://img.shields.io/github/commit-activity/m/dopebnan/kwancore/amethyst">
 <br>
-<p>[kwanCore] is a template-esque discord.py bot.
-  You should modify it according to your desired results.</p>
+<p>[kwanCore] Amethyst is the beta build of [kwanCore].
+  Updates here may be unstable. For stable builds, check the main branch.</p>
 </div>
 
 
