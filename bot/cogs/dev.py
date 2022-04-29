@@ -22,7 +22,7 @@ def is_bool(arg):
         raise TypeError("Value isn't a boolean")
 
 
-class Dev(commands.Cog, name="Developer Commands", description="Commands that are for the bot devs and maintainers"):
+class Dev(commands.Cog, name="Developer Commands", description="Commands that are for the bot devs and admins"):
     def __init__(self, bot):
         self.bot = bot
         self.logger = bot.logger
@@ -41,7 +41,7 @@ class Dev(commands.Cog, name="Developer Commands", description="Commands that ar
         else:
             return True
 
-    @commands.command(name="sysinfo", brief="Display system information")
+    @commands.command(name="sysinfo", brief="Displays the system information")
     async def stats(self, ctx):
         pic_num = str(len(os.listdir("usercontent/images/")))
         header = f"{self.bot.user.name}@[kwanCore]"
@@ -64,7 +64,7 @@ class Dev(commands.Cog, name="Developer Commands", description="Commands that ar
                   f"```")
         await ctx.send(result)
 
-    @commands.command(name="update", brief="Update the bot, or reset it to a commit.")
+    @commands.command(name="update", brief="Updates the bot, or resets it to the last.")
     async def update(self, ctx, flag="-m"):
         status = terminal("cd ../ && git fetch && git status").split('\n', 3)[1]
         cmd = ''
@@ -111,7 +111,7 @@ class Dev(commands.Cog, name="Developer Commands", description="Commands that ar
             else:
                 await ctx.send("Aborted.")
 
-    @commands.command(name="settings", brief="Change the settings")
+    @commands.command(name="settings", brief="Changes the settings")
     async def settings(self, ctx, *args: str):
         if len(args) == 1:
             if args == ("reset",):

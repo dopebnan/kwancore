@@ -8,6 +8,12 @@ import time
 
 
 def terminal(cmd):
+    """
+    Runs your command in the terminal, and returns the output
+
+    :param cmd:  str, the command
+    :return:  str, the utf-8 decoded output from the terminal
+    """
     with tempfile.TemporaryFile() as f:
         process = subprocess.Popen(cmd, stdout=f, shell=True)
         process.wait()
@@ -17,6 +23,12 @@ def terminal(cmd):
 
 
 def save_traceback(error):
+    """
+    Save the traceback of an error to a file
+
+    :param error:  error_obj, the error object
+    :return:  int, the id of the file (i.e. the epoch timestamp of it)
+    """
     result = ""
     e = traceback.format_exception(None, error, error.__traceback__)
     e.pop(0)  # remove first line
@@ -32,6 +44,13 @@ def save_traceback(error):
 
 
 def queue_format(queue, index):
+    """
+    Format the music queue.
+
+    :param queue:  dict, the music queue
+    :param index:  int, the queue index
+    :return:  str, the formatted queue
+    """
     result = f"```fsharp\n"
     for i in range(0, len(queue)):
         song = queue[i][0]['title'] + ' — ' + queue[i][0]['artist']

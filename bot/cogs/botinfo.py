@@ -17,7 +17,7 @@ class BotInfo(commands.Cog, name="Bot Info", description="Stuff about the bot"):
         file = discord.File('../changelog.md')
         await ctx.send(file=file)
 
-    @commands.command(name="info", brief="Information about the bot")
+    @commands.command(name="info", brief="Sends the bot info")
     async def info(self, ctx):
         embed = discord.Embed(
             title="Info",
@@ -35,12 +35,12 @@ class BotInfo(commands.Cog, name="Bot Info", description="Stuff about the bot"):
         )
         await ctx.send(embed=embed)
 
-    @commands.command(name="ping", brief="Check the latency")
+    @commands.command(name="ping", brief="Checks the latency")
     async def ping(self, ctx):
         msg = f"The ping is {round(self.bot.latency * 1000)}ms"
         await ctx.send(msg)
 
-    @commands.command(name="report", brief="Report a bug or a feature")
+    @commands.command(name="report", brief="To report a bug or a feature")
     async def report(self, ctx):
         embed = discord.Embed(
             title="Report",

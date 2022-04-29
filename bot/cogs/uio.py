@@ -3,7 +3,6 @@ kwancore, an extensive discord.py bot template
 Copyright (C) 2022  dopebnan
 """
 import json
-import random
 
 import discord
 from discord.ext import commands
@@ -41,12 +40,6 @@ class UIO(commands.Cog, name="UserInput/Output", description="General I/O comman
             color=discord.Color.random()
         )
         await ctx.send(embed=embed)
-
-    @commands.command(name="changelog", brief="Changes")
-    async def changelog(self, ctx):
-        changelog = discord.File('../changelog.md')
-        await ctx.send(file=changelog)
-
 
 def setup(bot):
     bot.add_cog(UIO(bot))

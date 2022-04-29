@@ -134,7 +134,7 @@ class Music(commands.Cog, name="Music", description="Music commands"):
             self.checks = 0
             self.inactivity.cancel()
 
-    @commands.command(name="join", brief="Bot joins the voice channel")
+    @commands.command(name="join", brief="Joins the voice channel")
     async def join(self, ctx):
         voice_client = ctx.guild.voice_client
         author_voice = ctx.author.voice
@@ -155,7 +155,7 @@ class Music(commands.Cog, name="Music", description="Music commands"):
             self.logger.log("info", "join", f"Joined {str(ctx.guild) + '/' + str(vc)}")
             await ctx.send(f"Joined `{vc}`!")
 
-    @commands.command(name="play", brief="Bot plays your requested song")
+    @commands.command(name="play", brief="Plays your requested song")
     async def play(self, ctx, *args):
         args = list(args)
         if args[0].startswith("-"):
@@ -221,7 +221,7 @@ class Music(commands.Cog, name="Music", description="Music commands"):
         if not voice_client.is_playing():
             await self.play_music()
 
-    @commands.command(name="pause", brief="Pause/unpause the current song")
+    @commands.command(name="pause", brief="Pauses/resumes the current song")
     async def pausing(self, ctx):
         voice_client = ctx.guild.voice_client
 
@@ -237,7 +237,7 @@ class Music(commands.Cog, name="Music", description="Music commands"):
             await ctx.send("Resumed the music")
             self.logger.log("info", "pause", "Resumed the music")
 
-    @commands.command(name="skip", brief="Skips the current song, and goes to the next one")
+    @commands.command(name="skip", brief="Skips the current song and goes to the next one")
     async def skip(self, ctx):
         voice_client = ctx.guild.voice_client
         author_voice_client = ctx.author.voice
@@ -252,7 +252,7 @@ class Music(commands.Cog, name="Music", description="Music commands"):
         voice_client.stop()
         await ctx.send("Skipped the song")
 
-    @commands.command(name="stop", brief="Stops the music, and clears the queue")
+    @commands.command(name="stop", brief="Stops the music and clears the queue")
     async def stopping(self, ctx):
         voice_client = ctx.guild.voice_client
 
@@ -267,7 +267,7 @@ class Music(commands.Cog, name="Music", description="Music commands"):
             voice_client.stop()
             await ctx.send("Stopped the music")
 
-    @commands.command(name="leave", brief="Bot leaves the voice channel")
+    @commands.command(name="leave", brief="Leaves the voice channel")
     async def leave(self, ctx):
         voice_client = ctx.guild.voice_client
         author_voice_client = ctx.author.voice
