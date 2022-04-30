@@ -35,7 +35,7 @@ reddit:  # Here are the Reddit configs (https://www.reddit.com/prefs/apps/)
   client_secret:  # 27-character string under "secret"
   password:  # The password for the Reddit account used for said application 
   user_agent:  # The user-agent for the application (should follow this format: <platform>:<app ID>:<version string> (by /u/<reddit username>))
-  username:  # The username of the Reddit accound used for said application
+  username:  # The username of the Reddit account used for said application
 
 dev_role:  # NAME of the developer role used to access the dev cog
 
