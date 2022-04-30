@@ -2,3 +2,4 @@ discord.py[voice]
 yt-dlp>=2022.3.8.2
 agenius>=4.0.1
 asyncpraw>=7.5.0
+PyYAML>=5.3.1

@@ -16,6 +16,7 @@ for your liking.</p>
 * [FFmpeg/FFprobe](https://git.ffmpeg.org/ffmpeg.git) 
 * [AGenius.py](https://github.com/dopebnan/AGenius.py)
 * [Async PRAW](https://github.com/praw-dev/asyncpraw)
+* [PyYAML](https://github.com/yaml/pyyaml)
 
 ## Self-hosting
 You need to create a file named `config.yaml` inside `bot/usercontent/`.
@@ -58,7 +59,8 @@ This project uses [discord.py](https://github.com/Rapptz/discord.py) by Rapptz a
 [yt-dlp](https://github.com/yt-dlp/yt-dlp) by yt-dlp as a way to get music from streaming services,
 [FFmpeg/FFprobe](https://git.ffmpeg.org/ffmpeg.git) by the FFmpeg team to stream the media through the bot,
 [AGenius.py](https://github.com/dopebnan/AGenius.py) by dopebnan, to load the lyrics of songs,
-[Async PRAW](https://github.com/praw-dev/asyncpraw) by praw-dev, to access reddit via python.
+[Async PRAW](https://github.com/praw-dev/asyncpraw) by praw-dev, to access reddit via python,
+[PyYAML](https://github.com/yaml/pyyaml) by YAML, to load `.yaml` files.
 
 Also note that this project, despite using multiple libraries and/or modules, doesn't ship any of them with it. 
 Any modules that this project uses belong to their respective owners, with their respective licenses.
