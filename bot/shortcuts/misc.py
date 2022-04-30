@@ -51,7 +51,7 @@ def queue_format(queue, index):
     :param index:  int, the queue index
     :return:  str, the formatted queue
     """
-    result = f"```fsharp\n"
+    result = "```fsharp\n"
     for i in range(0, len(queue)):
         song = queue[i][0]['title'] + ' — ' + queue[i][0]['artist']
         length = queue[i][0]['length']
@@ -66,7 +66,7 @@ def queue_format(queue, index):
         else:
             song = song + ' ' * (32 - len(song))
         if index == i + 1:
-            result += f"        You're here ↴\n"
+            result += "        You're here ↴\n"
         result += f" {i + 1}) {song} {length}      \n"
 
     result += "\n" + "You've hit the end of the queue!".center(42) + "\n```"

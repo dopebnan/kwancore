@@ -72,7 +72,7 @@ except json.decoder.JSONDecodeError:
     logger.log("warn", "initialization", "Couldn't decode the file, are you sure it's not empty? Defaulting..")
     settings = default_settings()
 if len(settings) != len(config["default_settings"]):
-    logger.log("error", "initialization", f"Bad settings file, defaulting..")
+    logger.log("error", "initialization", "Bad settings file, defaulting..")
     settings = default_settings()
 
 status_msg = ["KWANCORE!!!", "kc!"]
@@ -136,7 +136,7 @@ async def temp_task():
     elif bot.temp_warning > 5:
         bot.temp_warning = 0
         embed = discord.Embed(title="STOPPING", description=f"the pi's temp is `{temp}'C`", color=0xcc3300)
-        embed.set_footer(text=f"last warning")
+        embed.set_footer(text="last warning")
         logger.log("CRITICAL", "temp_task", f"the cpu reached {temp}'C, reloading")
 
         chan = bot.get_channel(config["warningChannel"])

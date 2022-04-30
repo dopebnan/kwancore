@@ -45,5 +45,6 @@ class UIO(commands.Cog, name="UserInput/Output", description="General I/O comman
         )
         await ctx.send(embed=embed)
 
+
 def setup(bot):
     bot.add_cog(UIO(bot))
