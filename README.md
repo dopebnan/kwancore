@@ -1,14 +1,18 @@
 <div align="center">
-<img alt="[kwanCore]" src="https://raw.githubusercontent.com/dopebnan/kwancore/main/assets/logo.png">
-<br>
-<img alt="Latest Release" src="https://img.shields.io/github/v/release/dopebnan/kwancore?display_name=release&sort=semver">
-<img alt="discord.py" src="https://img.shields.io/badge/-discord.py-5865F2">
-<img alt="License: GPLv3" src="https://img.shields.io/github/license/dopebnan/kwancore">
-<img alt="Commit Activity" src="https://img.shields.io/github/commit-activity/m/dopebnan/kwancore">
-<br>
-<p>kwanCore is a discord.py bot foundation. Everything is set up for you, you just need to tweak some settings
-for your liking.</p>
+
+[![kwanCore](https://raw.githubusercontent.com/dopebnan/kwancore/main/assets/logo.png)](README.md "[kwanCore]")
+
+[![Latest Release](https://img.shields.io/github/v/release/dopebnan/kwancore?display_name=release&sort=semver)](https://github.com/dopebnan/kwancore/releases)
+[![GitHub Workflow](https://img.shields.io/github/workflow/status/dopebnan/kwancore/Linting)](https://github.com/dopebnan/kwancore/actions/workflows/linting.yml)
+[![discord.py](https://img.shields.io/badge/-discord.py-5865F2)](https://github.com/Rapptz/discord.py)
+[![License: GPLv3](https://img.shields.io/github/license/dopebnan/kwancore)](LICENSE)
+[![Commit Activity](https://img.shields.io/github/commit-activity/m/dopebnan/kwancore)](https://github.com/dopebnan/kwancore/commits)
+![Last Commit](https://img.shields.io/github/last-commit/dopebnan/kwancore)
+
+kwanCore is a discord.py bot foundation. Everything is set up for you, you just need to tweak some settings
+for your liking.
 </div>
+
 
 ## Prerequisites
 * [discord.py](https://github.com/Rapptz/discord.py)
@@ -50,12 +54,13 @@ This template has been made for RaspberryPis, and has the highest possibility of
 It will probably run fine on any Debian-based distro too, but I wouldn't recommend running this on Windows,
 since some commands do require bash (i.e. checking the system uptime).
 
+## Legal Notices
+
 The whole entirety of this project is under the [GNU General Public License v3](LICENSE),
 except any files that state otherwise.
 
-## Legal Notices
-
-This project uses [discord.py](https://github.com/Rapptz/discord.py) by Rapptz as a Discord API wrapper, 
+This project requires that your machine has some prerequisites installed:
+[discord.py](https://github.com/Rapptz/discord.py) by Rapptz as a Discord API wrapper, 
 [yt-dlp](https://github.com/yt-dlp/yt-dlp) by yt-dlp as a way to get music from streaming services,
 [FFmpeg/FFprobe](https://git.ffmpeg.org/ffmpeg.git) by the FFmpeg team to stream the media through the bot,
 [AGenius.py](https://github.com/dopebnan/AGenius.py) by dopebnan, to load the lyrics of songs,
