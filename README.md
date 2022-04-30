@@ -1,13 +1,15 @@
 <div align="center">
-<img alt="[kwanCore] Amethyst" src="https://raw.githubusercontent.com/dopebnan/kwancore/amethyst/assets/amethyst.png">
-<br>
-<img alt="Latest Release" src="https://img.shields.io/github/v/release/dopebnan/kwancore?display_name=release&include_prereleases&sort=semver">
-<img alt="discord.py" src="https://img.shields.io/badge/-discord.py-5865F2">
-<img alt="License: GPLv3" src="https://img.shields.io/github/license/dopebnan/kwancore">
-<img alt="Commit Activity" src="https://img.shields.io/github/commit-activity/m/dopebnan/kwancore/amethyst">
-<br>
-<p>[kwanCore] Amethyst is the beta build of [kwanCore].
-  Updates here may be unstable. For stable builds, check the main branch.</p>
+
+![kwanCore Amethyst](https://raw.githubusercontent.com/dopebnan/kwancore/amethyst/assets/amethyst.png)
+
+[![Latest Release](https://img.shields.io/github/v/release/dopebnan/kwancore?display_name=release&include_prereleases&sort=semver)](https://github.com/dopebnan/kwancore/releases)
+[![discord.py](https://img.shields.io/badge/-discord.py-5865F2)](https://github.com/Rapptz/discord.py)
+[![License: GPLv3](https://img.shields.io/github/license/dopebnan/kwancore)](LICENSE)
+[![Commit Activity](https://img.shields.io/github/commit-activity/m/dopebnan/kwancore/amethyst)](https://github.com/dopebnan/kwancore/commits/amethyst)
+![Last Commit](https://img.shields.io/github/last-commit/dopebnan/kwancore/amethyst)
+
+kwanCore Amethyst is the beta build of kwanCore. Updates here may be unstable.
+For stable builds, check the [main branch](https://github.com/dopebnan/kwancore/tree/main).
 </div>
 
 
@@ -21,7 +23,7 @@
 
 ## Self-hosting
 You need to create a file named `config.yaml` inside `bot/usercontent/`.
-The contents of that file have to look something like this:
+The file contents have to look something like this:
 ```yaml
 warningChannel:  # The snowflake ID of the discord channel where the warnings would be sent to
 token:  # Your bot's discord token
@@ -32,7 +34,7 @@ reddit:  # Here are the Reddit configs (https://www.reddit.com/prefs/apps/)
   client_secret:  # 27-character string under "secret"
   password:  # The password for the Reddit account used for said application 
   user_agent:  # The user-agent for the application (should follow this format: <platform>:<app ID>:<version string> (by /u/<reddit username>))
-  username:  # The username of the Reddit accound used for said application
+  username:  # The username of the Reddit account used for said application
 
 dev_role:  # NAME of the developer role used to access the dev cog
 
