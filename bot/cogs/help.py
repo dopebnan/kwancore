@@ -49,7 +49,7 @@ class Help(commands.Cog, name="Help", description="Help commands"):
                 self.logger.log("info", "help", f"Set-up the core of '{cog}' msg")
                 for cmd in self.bot.commands:
                     if cmd.cog == self.bot.cogs[cog]:
-                        result += f"{cmd.name}{' '* (12 - len(cmd.name))}- {cmd.brief}\n"
+                        result += f"{cmd.name}{' ' * (14 - len(cmd.name))}- {cmd.brief}\n"
                         self.logger.log("info", "help", f"Added '{cmd.qualified_name}' to the msg")
                 result += "\n\n"
 

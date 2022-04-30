@@ -305,7 +305,7 @@ class Music(commands.Cog, name="Music", description="Music commands"):
             info = await self.genius.search_song(song["keywords"])
 
         embed = discord.Embed(
-            title=self.music_queue[self.queue_index - 1][0]["title"],
+            title=info.full_title,
             description=info.lyrics[:2000].split("Lyrics")[1],
             color=discord.Color.random()
         )
