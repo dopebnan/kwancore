@@ -51,21 +51,21 @@ class Help(commands.Cog, name="Help", description="Help commands"):
         else:
             if arg not in self.bot.all_commands:
                 raise self.bot.errors.BadArgument("That command doesn't exist", arg)
-            else:
-                cmds = self.bot.all_commands
-                if arg in descriptions:
-                    title = descriptions[arg].split("\n\n", 1)[0]
-                    desc = descriptions[arg].split("\n\n", 1)[1]
-                else:
-                    title = f"`{self.bot.command_prefix}{arg}`"
-                    desc = cmds[arg].brief
 
-                embed = discord.Embed(
-                    title=title,
-                    description=desc,
-                    color=discord.Color.random()
-                )
-                self.logger.log("info", "help_cb", f"Created {arg} help embed")
+            cmds = self.bot.all_commands
+            if arg in descriptions:
+                title = descriptions[arg].split("\n\n", 1)[0]
+                desc = descriptions[arg].split("\n\n", 1)[1]
+            else:
+                title = f"`{self.bot.command_prefix}{arg}`"
+                desc = cmds[arg].brief
+
+            embed = discord.Embed(
+                title=title,
+                description=desc,
+                color=discord.Color.random()
+            )
+            self.logger.log("info", "help_cb", f"Created {arg} help embed")
             await ctx.send(embed=embed)
 
 

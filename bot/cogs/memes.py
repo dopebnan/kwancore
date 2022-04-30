@@ -1,6 +1,6 @@
 import aiohttp
-import discord
 import asyncpraw
+
 from discord.ext import commands
 
 
@@ -15,7 +15,7 @@ class Memes(commands.Cog, name="Memes", description="Reddit and stuff"):
         self.bot = bot
         self.logger = bot.logger
         self.config = bot.config
-        self.settings = bot.settings
+        self.settings = bot.setting
         self.reddit = asyncpraw.Reddit(
             client_id=bot.config["reddit"]['client_id'],
             client_secret=bot.config["reddit"]['client_secret'],

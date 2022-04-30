@@ -13,7 +13,7 @@ class BotInfo(commands.Cog, name="Bot Info", description="Stuff about the bot"):
         self.config = bot.config
 
     @commands.command(name="changelog", aliases=["changes", "updates"], brief="Sends the changelog")
-    async def info(self, ctx):
+    async def changelog(self, ctx):
         file = discord.File('../changelog.md')
         await ctx.send(file=file)
 

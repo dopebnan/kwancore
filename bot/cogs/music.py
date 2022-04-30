@@ -162,9 +162,9 @@ class Music(commands.Cog, name="Music", description="Music commands"):
             flag = args.pop(0)
         else:
             flag = "--youtube"
-        if flag == "-yt" or flag == "--youtube":
+        if flag in ('-yt', "--youtube"):
             search_type = "ytsearch:"
-        elif flag == "-sc" or flag == "--soundcloud":
+        elif flag in ('-sc', "--soundcloud"):
             search_type = "scsearch:"
         else:
             raise self.bot.errors.BadArgument("That flag doesn't exist", flag)
@@ -176,7 +176,7 @@ class Music(commands.Cog, name="Music", description="Music commands"):
 
         if not vc:
             raise self.bot.errors.AuthorNotInVoice()
-        elif not voice_client:
+        if not voice_client:
             raise self.bot.errors.NoVoiceClient()
 
         async with ctx.typing():
@@ -206,11 +206,11 @@ class Music(commands.Cog, name="Music", description="Music commands"):
 
         if not author_voice:
             raise self.bot.errors.AuthorNotInVoice()
-        elif not voice_client:
+        if not voice_client:
             raise self.bot.errors.NoVoiceClient()
-        elif ctx.message.attachments:
+        if ctx.message.attachments:
             raise self.bot.errors.NoAttachment("There are no files attached to your message")
-        elif "audio" not in ctx.message.attachments[0].content_type:
+        if "audio" not in ctx.message.attachments[0].content_type:
             raise self.bot.errors.BadAttachment("The attached file isn't an audio file",
                                                 ctx.message.attachments[0].filename)
 
@@ -244,9 +244,9 @@ class Music(commands.Cog, name="Music", description="Music commands"):
 
         if not voice_client:
             raise self.bot.errors.NoVoiceClient()
-        elif not author_voice_client:
+        if not author_voice_client:
             raise self.bot.errors.AuthorNotInVoice()
-        elif not self.music_queue or len(self.music_queue) < self.queue_index:
+        if not self.music_queue or len(self.music_queue) < self.queue_index:
             raise self.bot.errors.EmptyQueue("You've reached the end of the queue")
 
         voice_client.stop()
@@ -274,9 +274,9 @@ class Music(commands.Cog, name="Music", description="Music commands"):
 
         if not author_voice_client:
             raise self.bot.errors.AuthorNotInVoice()
-        elif not voice_client:
+        if not voice_client:
             raise self.bot.errors.NoVoiceClient()
-        elif author_voice_client.channel != voice_client.channel:
+        if author_voice_client.channel != voice_client.channel:
             raise self.bot.errors.AuthorNotInVoice("Author not in same voice channel as bot")
 
         self.music_queue.clear()
@@ -307,7 +307,7 @@ class Music(commands.Cog, name="Music", description="Music commands"):
             color=discord.Color.random()
         )
         embed.add_field(
-            name=u"\u200b",
+            name="\u200b",
             value=info.lyrics[2000:3000].replace("Embed", '') + '…'
         )
         if len(info.lyrics) > 3000:

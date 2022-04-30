@@ -21,16 +21,18 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import os
 import random
 import unicodedata
-import yaml
 import json
+import yaml
+
+import discord
+from discord.ext import commands, tasks
+from discord.ext.commands import Bot
 
 import shortcuts
 import embeds
 import errors
 
-import discord
-from discord.ext import commands, tasks
-from discord.ext.commands import Bot
+
 
 if not os.path.isdir("logs"):
     os.mkdir("logs/")
@@ -43,6 +45,7 @@ logger.add_level("command", 21)
 
 
 def default_settings():
+    """Makes a default settings.json"""
     with open("usercontent/settings.json", 'w') as f:
         json.dump(config["default_settings"], f, indent=2)
     with open("usercontent/settings.json") as f:
@@ -80,7 +83,7 @@ bot.config = config
 bot.settings = settings
 bot.logger = logger
 bot.errors = errors
-bot.version = "0.6-b.1"
+bot.version = "0.6-b.2"
 bot.temp_warning = 0
 
 

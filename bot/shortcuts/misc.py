@@ -15,10 +15,10 @@ def terminal(cmd):
     :return:  str, the utf-8 decoded output from the terminal
     """
     with tempfile.TemporaryFile() as f:
-        process = subprocess.Popen(cmd, stdout=f, shell=True)
-        process.wait()
-        f.seek(0)
-        result = f.read()
+        with subprocess.Popen(cmd, stdout=f, shell=True) as process:
+            process.wait()
+            f.seek(0)
+            result = f.read()
     return result.decode("utf-8")
 
 
