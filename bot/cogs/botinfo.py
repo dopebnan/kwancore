@@ -14,7 +14,6 @@ class BotInfo(commands.Cog, name="Bot Info", description="Stuff about the bot"):
     def __init__(self, bot):
         self.bot = bot
         self.logger = bot.logger
-        self.config = bot.config
 
     @commands.command(name="changelog", aliases=["changes", "updates"], brief="Sends the changelog")
     async def changelog(self, ctx):
