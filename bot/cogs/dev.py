@@ -1,7 +1,11 @@
 """
-kwancore, an extensive discord.py bot template
+kwanCore, a discord.py bot foundation.
 Copyright (C) 2022  dopebnan
+
+You should have received a copy of the GNU General Public License
+along with kwanCore. If not, see <https://www.gnu.org/licenses/>.
 """
+
 import json
 import os
 import time

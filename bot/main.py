@@ -1,21 +1,23 @@
 #!/usr/bin/env python3
 
 """
-kwancore, an extensive discord.py bot template
+kwanCore, a discord.py bot foundation.
 Copyright (C) 2022  dopebnan
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
+This file is part of kwanCore.
+
+kwanCore is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
+KwanCore is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
+along with kwanCore. If not, see <https://www.gnu.org/licenses/>.
 """
 
 import os
@@ -31,8 +33,6 @@ from discord.ext.commands import Bot
 import shortcuts
 import embeds
 import errors
-
-
 
 if not os.path.isdir("logs"):
     os.mkdir("logs/")
