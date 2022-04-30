@@ -6,7 +6,7 @@
 <img alt="License: GPLv3" src="https://img.shields.io/github/license/dopebnan/kwancore">
 <img alt="Commit Activity" src="https://img.shields.io/github/commit-activity/m/dopebnan/kwancore">
 <br>
-<p>[kwanCore] is a discord.py bot foundation. Everything is set up for you, you just need to tweak some settings
+<p>kwanCore is a discord.py bot foundation. Everything is set up for you, you just need to tweak some settings
 for your liking.</p>
 </div>
 

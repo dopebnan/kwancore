@@ -18,6 +18,9 @@ from discord.utils import get
 from platform import platform, python_version
 from shortcuts import terminal
 
+with open("usercontent/settings.json") as file:
+    setting = json.load(file)
+
 
 def is_bool(arg):
     if arg.lower() in ("yes", "y", "true", "1", "enable", "on"):
@@ -33,7 +36,7 @@ class Dev(commands.Cog, name="Developer Commands", description="Commands that ar
         self.bot = bot
         self.logger = bot.logger
         self.config = bot.config
-        self.setting = bot.setting
+        self.setting = setting
 
     async def cog_check(self, ctx):
         dev_role = get(ctx.guild.roles, name=self.bot.config["dev_role"])

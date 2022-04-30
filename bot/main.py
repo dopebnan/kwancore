@@ -80,10 +80,9 @@ status_msg = ["KWANCORE!!!", "kc!"]
 bot = Bot(command_prefix="kc!")
 
 bot.config = config
-bot.settings = settings
 bot.logger = logger
 bot.errors = errors
-bot.version = "0.6-b.2"
+bot.version = "0.6-b.3"
 bot.temp_warning = 0
 
 
