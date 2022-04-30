@@ -311,12 +311,14 @@ class Music(commands.Cog, name="Music", description="Music commands"):
         )
         embed.add_field(
             name="\u200b",
-            value=info.lyrics[2000:3000].replace("Embed", '') + '…'
+            value=info.lyrics[2000:3000].replace("Embed", '') + '…',
+            inline=False
         )
         if len(info.lyrics) > 3000:
             embed.add_field(
                 name="Character limit hit",
-                value=f"Go to {info.url} for the rest"
+                value=f"Go to {info.url} for the rest",
+                inline=False
             )
         embed.set_footer(text="Powered by Genius.com and AGenius.py")
         await ctx.send(embed=embed)
