@@ -59,6 +59,8 @@ try:
         logger.log("info", "initialization", f"loaded {file.name}")
 except FileNotFoundError:
     logger.log("critical", "initialization", "config file not found, stopping..")
+    os.mkdir("usercontent")
+    os.mkdir("usercontent/images")
     raise FileNotFoundError("Config file not found.")
 
 try:
