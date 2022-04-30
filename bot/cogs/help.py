@@ -18,6 +18,7 @@ descriptions = {
     "remove": "`kc!remove [index]`\n\nRemoves the `index`th item from the queue",
     "settings": ("`kc!settings [key] [value]`\n"
                  "`kc!settings [mode]`\n"
+                 "`kc!settings`\n"
                  "\nChange the value of each `key` to `value`"
                  "\neg. `kc!settings pic_cooldown 10`\n"
                  "\nModes:\n"
