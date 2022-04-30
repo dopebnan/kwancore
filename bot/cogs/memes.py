@@ -15,7 +15,7 @@ from discord.ext import commands
 async def is_pic(url):
     async with aiohttp.ClientSession() as session:
         async with session.head(url) as r:
-            return r.headers.get("Content-Type").startswith("image/")
+            return str(r.headers.get("Content-Type")).startswith("image/")
 
 
 class Memes(commands.Cog, name="Memes", description="Reddit and stuff"):
