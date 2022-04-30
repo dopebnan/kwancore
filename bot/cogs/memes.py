@@ -35,7 +35,12 @@ class Memes(commands.Cog, name="Memes", description="Reddit and stuff"):
         async with ctx.typing():
             subreddit = await self.reddit.subreddit(subreddit)
             submission = await subreddit.random()
+            i = 0
             while not await is_pic(submission.url):
+                if i >= 10:
+                    raise TimeoutError("Couldn't find an image")
+                # if 10 posts didn't have an image, then that's worrying
+                i += 1
                 submission = await subreddit.random()
             await ctx.send(submission.url)
 

@@ -52,3 +52,8 @@ class NoAttachment(GenericError):
 class RoleError(GenericError):
     def __init__(self, role, author):
         super().__init__(f"'{role}' not in '{author}'.roles")
+
+
+class TimeoutError(GenericError):
+    def __init__(self, msg="Couldn't find an image"):
+
