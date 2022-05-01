@@ -143,7 +143,7 @@ class Music(commands.Cog, name="Music", description="Music commands"):
             self.logger.log("warn", "inactivity", f"Inactivity check #{self.checks} returned false")
             self.checks = 0
 
-        if self.checks > 2:
+        if self.checks > 3:
             self.music_queue.clear()
             self.queue_index = 0
             await ctx.voice_client.disconnect()
