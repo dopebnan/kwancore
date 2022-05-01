@@ -96,20 +96,19 @@ class Music(commands.Cog, name="Music", description="Music commands"):
         for file in files:
             if "audio" not in file.content_type:
                 raise self.bot.errors.BadAttachment("Attachment isn't an audio file")
-            else:
-                # check length via ffprobe
-                a = misc.terminal(f"ffprobe {file} -show_entries format=duration -v quiet -of csv=\"p=0\"")
-                self.logger.log("info", "attachment_url", f"Got {str(file)}")
-                result = {
-                    "hls": str(file),
-                    "url": str(file),
-                    "title": file.filename.replace('_', ' '),
-                    "artist": "Unknown Artist",
-                    "length": round(float(a)),
-                    "keywords": file.filename.split('.')[0].replace('_', ' ')
-                }
-                self.music_queue.append([result, ctx.guild.voice_client, ctx.author])
-                self.logger.log("info", "add_attachment_to_queue", f"Added {result['title']} to the queue")
+            # check length via ffprobe
+            a = misc.terminal(f"ffprobe {file} -show_entries format=duration -v quiet -of csv=\"p=0\"")
+            self.logger.log("info", "attachment_url", f"Got {str(file)}")
+            result = {
+                "hls": str(file),
+                "url": str(file),
+                "title": file.filename.replace('_', ' '),
+                "artist": "Unknown Artist",
+                "length": round(float(a)),
+                "keywords": file.filename.split('.')[0].replace('_', ' ')
+            }
+            self.music_queue.append([result, ctx.guild.voice_client, ctx.author])
+            self.logger.log("info", "add_attachment_to_queue", f"Added {result['title']} to the queue")
 
         return file
 

@@ -9,13 +9,12 @@ along with kwanCore. If not, see <https://www.gnu.org/licenses/>.
 import json
 import os
 import time
+from platform import platform, python_version
 
 import discord
 from discord.ext import commands
 from discord.utils import get
 
-
-from platform import platform, python_version
 from shortcuts import terminal
 
 with open("usercontent/settings.json") as file:
@@ -162,7 +161,7 @@ class Dev(commands.Cog, name="Developer Commands", description="Commands that ar
             await user.send("The log file", file=log)
             await ctx.send("Check DMs")
         elif arg in ('-n', "--create-new"):
-            os.rename("./logs/log.txt", f"./logs/log{time.strftime(f'%Y-%m-%dT%H:%M:%SZ', time.gmtime())}")
+            os.rename("./logs/log.txt", f"./logs/log{time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())}")
             self.logger.log("info", "log/arg_n", "Created a new log file.")
             await ctx.send("Created a new log file")
 
