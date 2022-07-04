@@ -14,6 +14,7 @@ from discord.ext import commands
 
 from shortcuts import terminal
 
+
 class BotInfo(commands.Cog, name="Bot Info", description="Stuff about the bot"):
     def __init__(self, bot):
         self.bot = bot
