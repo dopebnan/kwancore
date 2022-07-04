@@ -21,6 +21,5 @@ Check the [Amethyst](https://github.com/dopebnan/kwancore/blob/amethyst/changelo
 - Consistent case for logs
 - FFmpeg option bugs
 - Users being able to control the bot from a different voice channel
-- 
 
 ## [1.0] - 2022-05-01
