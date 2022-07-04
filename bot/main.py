@@ -82,7 +82,7 @@ bot = Bot(command_prefix="kc!")
 bot.config = config
 bot.logger = logger
 bot.errors = errors
-bot.version = "1.1"
+bot.version = "1.0.1"
 bot.temp_warning = 0
 
 
