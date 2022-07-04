@@ -106,7 +106,7 @@ async def status_task():
     logger.log("info", "status_task", f"changed status to '{chosen_status}'")
 
 
-@tasks.loop(minutes=0.1)
+@tasks.loop(minutes=5)
 async def temp_task():
     await bot.wait_until_ready()
     try:
