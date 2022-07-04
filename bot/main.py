@@ -82,7 +82,7 @@ bot = Bot(command_prefix="kc!")
 bot.config = config
 bot.logger = logger
 bot.errors = errors
-bot.version = "0.6-b.3"
+bot.version = "1.1"
 bot.temp_warning = 0
 
 
@@ -90,8 +90,8 @@ bot.temp_warning = 0
 async def on_ready():
     logger.log()
     logger.log(message="kwancore".center(79))
-    logger.log(message=f"discord.py version: {discord.__version__}".center(79))
-    logger.log(message=f"bot: {bot.user.name}".center(79))
+    logger.log(message=f"discord.py version: {discord.__version__}".center(30))
+    logger.log(message=f"bot: {bot.user.name}".center(30))
     logger.log()
     status_task.start()
     logger.log("info", "on_ready", "started status_task")
@@ -106,7 +106,7 @@ async def status_task():
     logger.log("info", "status_task", f"changed status to '{chosen_status}'")
 
 
-@tasks.loop(minutes=5)
+@tasks.loop(minutes=0.1)
 async def temp_task():
     await bot.wait_until_ready()
     try:
@@ -118,7 +118,9 @@ async def temp_task():
 
     if 80 > temp > 70:
         bot.temp_warning += 1
-    elif temp > 80:
+    elif temp < 70:
+        bot.temp_warning = 0
+    else:
         logger.log("critical", "temp_task", f"the cpu reached {temp}'C")
         logger.log("info", "temp_task", "reloading..")
         reload()
@@ -126,7 +128,9 @@ async def temp_task():
     if 0 < bot.temp_warning < 5:
         embed = discord.Embed(title="WARNING", description=f"the pi's temp is `{temp}'C`", color=0xffc300)
         embed.set_footer(text=f"{bot.temp_warning}. warning")
-        logger.log("warn", "temp_task", f"the cpu reached {temp}'C ({bot.temp_warning})")
+        uptime = shortcuts.terminal('uptime').split(': ')[1][:-1]
+        logger.log("warn", "temp_task",
+                   f"the cpu reached {temp}'C ({bot.temp_warning}) [{uptime}]")
 
         chan = bot.get_channel(config["warningChannel"])
         await chan.send(embed=embed)
@@ -136,7 +140,7 @@ async def temp_task():
         bot.temp_warning = 0
         embed = discord.Embed(title="STOPPING", description=f"the pi's temp is `{temp}'C`", color=0xcc3300)
         embed.set_footer(text="last warning")
-        logger.log("CRITICAL", "temp_task", f"the cpu reached {temp}'C, reloading")
+        logger.log("CRITICAL", "temp_task", f"The cpu reached {temp}'C, reloading")
 
         chan = bot.get_channel(config["warningChannel"])
         await chan.send(embed=embed)
@@ -152,14 +156,14 @@ if __name__ == "__main__":
 for cog in os.listdir("cogs"):
     if cog.endswith(".py"):
         bot.load_extension(f"cogs.{cog.split('.', 1)[0]}")
-        logger.log("INFO", "cog loader", f"loaded '{cog}'")
+        logger.log("INFO", "cog loader", f"Loaded '{cog}'")
 
 
 def reload():
     for cogs in os.listdir("cogs"):
         if cogs.endswith(".py"):
             bot.reload_extension(f"cogs.{cogs.split('.', 1)[0]}")
-            logger.log("INFO", "reload", f"reloaded '{cogs}'")
+            logger.log("INFO", "reload", f"Reloaded '{cogs}'")
 
 
 @bot.event

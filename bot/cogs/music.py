@@ -16,7 +16,7 @@ from yt_dlp import YoutubeDL as yt_dlp
 from shortcuts import misc
 
 ytdl_opts = {'format': 'bestaudio/audio', "quiet": True, "ignoreerrors": True}
-ffmpeg_opts = {"bopts": "-reconnect 1", "opts": "-vn"}
+ffmpeg_opts = '-vn'
 
 
 class Music(commands.Cog, name="Music", description="Music commands"):
@@ -129,8 +129,7 @@ class Music(commands.Cog, name="Music", description="Music commands"):
             self.queue_index += 1
 
             self.logger.log('info', "play_music", f"Playing '{song['title']}'")
-            vc.play(discord.FFmpegPCMAudio(song["hls"],
-                                           before_options=ffmpeg_opts["bopts"], options=ffmpeg_opts["opts"]),
+            vc.play(discord.FFmpegPCMAudio(song["hls"], options=ffmpeg_opts),
                     after=lambda play: asyncio.run_coroutine_threadsafe(self.play_music(), self.bot.loop))
 
     @tasks.loop(minutes=5)
@@ -153,7 +152,7 @@ class Music(commands.Cog, name="Music", description="Music commands"):
             self.checks = 0
             self.inactivity.cancel()
 
-    @commands.command(name="join", brief="Joins the voice channel")
+    @commands.command(name="join", aliases=['j'], brief="Joins the voice channel")
     async def join(self, ctx):
         voice_client = ctx.guild.voice_client
         author_voice = ctx.author.voice
@@ -174,13 +173,16 @@ class Music(commands.Cog, name="Music", description="Music commands"):
             self.logger.log("info", "join", f"Joined {str(ctx.guild) + '/' + str(vc)}")
             await ctx.send(f"Joined `{vc}`!")
 
-    @commands.command(name="play", brief="Plays your requested song")
+    @commands.command(name="play", aliases=['p'], brief="Plays your requested song")
     async def play(self, ctx, *args):
         args = list(args)
-        if args[0].startswith("-"):
-            flag = args.pop(0)
-        else:
-            flag = "--youtube"
+        try:
+            if args[0].startswith("-"):
+                flag = args.pop(0)
+            else:
+                flag = "--youtube"
+        except IndexError:
+            raise self.bot.errors.BadArgument("Is an argument that is required but missing", "*args")
         if flag in ('-yt', "--youtube"):
             search_type = "ytsearch:"
         elif flag in ('-sc', "--soundcloud"):
@@ -197,6 +199,8 @@ class Music(commands.Cog, name="Music", description="Music commands"):
             raise self.bot.errors.AuthorNotInVoice()
         if not voice_client:
             raise self.bot.errors.NoVoiceClient()
+        if vc.channel != voice_client.channel:
+            raise self.bot.errors.AuthorNotInVoice()
 
         async with ctx.typing():
             songs = self.search(args, search_type)
@@ -210,7 +214,7 @@ class Music(commands.Cog, name="Music", description="Music commands"):
         if not voice_client.is_playing():
             await self.play_music()
 
-    @commands.command(name="queue", brief="Shows the queue")
+    @commands.command(name="queue", aliases=['q'], brief="Shows the queue")
     async def queue(self, ctx):
         if self.music_queue:
             result = misc.queue_format(self.music_queue, self.queue_index)
@@ -218,7 +222,7 @@ class Music(commands.Cog, name="Music", description="Music commands"):
         else:
             await ctx.send("The queue is empty")
 
-    @commands.command(name="playfile", brief="Plays your file")
+    @commands.command(name="playfile", aliases=['pf'], brief="Plays your file")
     async def playfile(self, ctx):
         author_voice = ctx.author.voice
         voice_client = ctx.guild.voice_client
@@ -227,6 +231,8 @@ class Music(commands.Cog, name="Music", description="Music commands"):
             raise self.bot.errors.AuthorNotInVoice()
         if not voice_client:
             raise self.bot.errors.NoVoiceClient()
+        if author_voice.channel != voice_client.channel:
+            raise self.bot.errors.AuthorNotInVoice()
         if not ctx.message.attachments:
             raise self.bot.errors.NoAttachment("There are no files attached to your message")
 
@@ -242,10 +248,12 @@ class Music(commands.Cog, name="Music", description="Music commands"):
     @commands.command(name="pause", brief="Pauses/resumes the current song")
     async def pausing(self, ctx):
         voice_client = ctx.guild.voice_client
+        author_voice_client = ctx.author.voice
 
         if not voice_client:
             raise self.bot.errors.NoVoiceClient()
-
+        if author_voice_client.channel != voice_client.channel:
+            raise self.bot.errors.AuthorNotInVoice()
         if voice_client.is_playing():
             voice_client.pause()
             await ctx.send("Paused the music")
@@ -264,6 +272,8 @@ class Music(commands.Cog, name="Music", description="Music commands"):
             raise self.bot.errors.NoVoiceClient()
         if not author_voice_client:
             raise self.bot.errors.AuthorNotInVoice()
+        if author_voice_client.channel != voice_client.channel:
+            raise self.bot.errors.AuthorNotInVoice()
         if not self.music_queue or len(self.music_queue) < self.queue_index:
             raise self.bot.errors.EmptyQueue("You've reached the end of the queue")
 
@@ -273,10 +283,12 @@ class Music(commands.Cog, name="Music", description="Music commands"):
     @commands.command(name="stop", brief="Stops the music and clears the queue")
     async def stopping(self, ctx):
         voice_client = ctx.guild.voice_client
+        author_voice_client = ctx.author.voice
 
         if not voice_client:
             raise self.bot.errors.NoVoiceClient("Bot not in any voice channel")
-
+        if author_voice_client.channel != voice_client.channel:
+            raise self.bot.errors.AuthorNotInVoice()
         if not voice_client.is_playing():
             await ctx.send("There's nothing playing")
         else:
@@ -285,7 +297,7 @@ class Music(commands.Cog, name="Music", description="Music commands"):
             voice_client.stop()
             await ctx.send("Stopped the music")
 
-    @commands.command(name="leave", brief="Leaves the voice channel")
+    @commands.command(name="leave", aliases=["disconnect", 'd'], brief="Leaves the voice channel")
     async def leave(self, ctx):
         voice_client = ctx.guild.voice_client
         author_voice_client = ctx.author.voice
@@ -303,15 +315,16 @@ class Music(commands.Cog, name="Music", description="Music commands"):
         self.inactivity.cancel()
         await ctx.send("Left voice channel")
 
-    @commands.command(name="remove", brief="Removes an item from the queue")
+    @commands.command(name="remove", aliases=['r'], brief="Removes an item from the queue")
     async def remove(self, ctx, index: int):
         if not 1 < index <= len(self.music_queue):
             raise IndexError("Index out of range")
 
         await ctx.send(f"Removed `{self.music_queue.pop(index - 1)[0]['title']}` from the queue")
 
-    @commands.command(name="lyrics", brief="Searches for the currently playing lyrics")
+    @commands.command(name="lyrics", aliases=['l'], brief="Searches for the currently playing lyrics")
     async def lyrics(self, ctx):
+        assert ctx.guild.voice_client, "Bot not in vc"
         if not ctx.guild.voice_client.is_playing:
             raise self.bot.errors.VoiceClientError("voice_client isn't playing anything")
 

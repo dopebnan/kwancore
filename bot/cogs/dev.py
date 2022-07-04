@@ -9,7 +9,6 @@ along with kwanCore. If not, see <https://www.gnu.org/licenses/>.
 import json
 import os
 import time
-from platform import platform, python_version
 
 import discord
 from discord.ext import commands
@@ -26,8 +25,7 @@ def is_bool(arg):
         return True
     if arg.lower() in ("no", "n", "false", "0", "disable", "off"):
         return False
-    else:
-        raise TypeError("Value isn't a boolean")
+    raise TypeError("Value isn't a boolean")
 
 
 class Dev(commands.Cog, name="Developer Commands", description="Commands that are for the bot devs and admins"):
@@ -49,29 +47,6 @@ class Dev(commands.Cog, name="Developer Commands", description="Commands that ar
         else:
             return True
 
-    @commands.command(name="sysinfo", brief="Displays the system information")
-    async def stats(self, ctx):
-        pic_num = str(len(os.listdir("usercontent/images/")))
-        header = f"{self.bot.user.name}@[kwanCore]"
-        latest_ver = terminal("git tag -l").split('\n')[0]
-        try:
-            temp = terminal("vcgencmd measure_temp").split('=')[1]
-        except IndexError:
-            self.logger.log("warn", "stats", "Couldn't measure CPU temp, are you sure this is a raspberrypi?")
-            temp = 0
-        result = (f"```yaml\n"
-                  f"{header}\n{'-' * len(header)}\n"
-                  f"OS: {platform().split('-', 1)[0]}\n"
-                  f"CPU: {temp}\n"
-                  f"Uptime: {terminal(b'uptime -p').replace('up ', '')}"
-                  f"Python: {python_version()}\n"
-                  f"Discord.py: {discord.__version__}\n"
-                  f"Current Version: {self.bot.version}\n"
-                  f"Latest Version: {latest_ver}\n"
-                  f"Pics: {pic_num}\n"
-                  f"```")
-        await ctx.send(result)
-
     @commands.command(name="update", brief="Updates the bot, or resets it to the last.")
     async def update(self, ctx, flag="-m"):
         status = terminal("cd ../ && git fetch && git status").split('\n', 3)[1]
@@ -79,7 +54,7 @@ class Dev(commands.Cog, name="Developer Commands", description="Commands that ar
         h = False
         if flag in ('-h', "--help"):
             msg = ("```bat\n"
-                   "kc!update [mode]\n"
+                   f"{self.bot.command_prefix}update [mode]\n"
                    "Update the bot, or reset it to a commit.\n"
                    "\nModes:\n"
                    f" -r, --reset{' ' * 5}delete changes and revert back to the original commit\n"

@@ -31,7 +31,10 @@ descriptions = {
             "\nFlags:\n"
             "` -n, --create-new    creates a new log.txt, and saves the old one`"),
     "random_image": ("`kc!random_image [subreddit]`\n"
-                     "\nGets a random image from r/`subreddit`")
+                     "\nGets a random image from r/`subreddit`"),
+    "help": ("`r!help [command]\n"
+             "`r!help`\n"
+             "\nDisplays help about a command. If no command is specified then it lists all the commands.")
 }
 
 

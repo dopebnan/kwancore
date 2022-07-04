@@ -6,4 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 Check the [Amethyst](https://github.com/dopebnan/kwancore/blob/amethyst/changelog.md) changelog.
 
-## [1.0] - 2022-04-30
+## [1.1] - 2022-07-04
+
+
+## [1.0] - 2022-05-01

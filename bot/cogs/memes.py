@@ -6,16 +6,10 @@ You should have received a copy of the GNU General Public License
 along with kwanCore. If not, see <https://www.gnu.org/licenses/>.
 """
 
-import aiohttp
 import asyncpraw
 
 from discord.ext import commands
-
-
-async def is_pic(url):
-    async with aiohttp.ClientSession() as session:
-        async with session.head(url) as r:
-            return str(r.headers.get("Content-Type")).startswith("image/")
+import discord
 
 
 class Memes(commands.Cog, name="Memes", description="Reddit and stuff"):
@@ -30,19 +24,43 @@ class Memes(commands.Cog, name="Memes", description="Reddit and stuff"):
             username=bot.config["reddit"]['username']
         )
 
+    async def get_post_embed(self, subreddit, color=None, timeout=10):
+        """
+        Get a random image from a subreddit
+
+        :param subreddit:  str, the subreddit name
+        :param color:  int, the embed color
+            Default: None
+        :param timeout:  int, the amount of loops it should do before stopping;
+            Default:  10
+        """
+        subreddit = await self.reddit.subreddit(subreddit)
+        submission = await subreddit.random()
+        i = 0
+
+        while not submission.post_hint == "image":
+            if i >= timeout:
+                raise TimeoutError("Couldn't find an image")
+            # if 10 posts didn't have an image, then that's worrying
+            i += 1
+            submission = await subreddit.random()
+
+        self.logger.log("info", "get_post_embed", f"Found {submission.permalink} from r/{submission.subreddit}")
+        embed = discord.Embed(
+            title=submission.title,
+            url=submission.url,
+            color=color
+        )
+        embed.set_image(url=submission.url)
+        embed.add_field(name=f":arrow_up: {submission.score} :arrow_down:", value="\u200b")
+        embed.set_footer(text=f"Posted by u/{submission.author} in r/{submission.subreddit}")
+        return embed
+
     @commands.command(name="random_image", brief="Gets a random image post from a subreddit")
     async def random_image(self, ctx, subreddit):
         async with ctx.typing():
-            subreddit = await self.reddit.subreddit(subreddit)
-            submission = await subreddit.random()
-            i = 0
-            while not await is_pic(submission.url):
-                if i >= 10:
-                    raise TimeoutError("Couldn't find an image")
-                # if 10 posts didn't have an image, then that's worrying
-                i += 1
-                submission = await subreddit.random()
-            await ctx.send(submission.url)
+            embed = await self.get_post_embed(subreddit, discord.Color.random())
+            await ctx.send(embed=embed)
 
 
 def setup(bot):
