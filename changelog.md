@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 Check the [Amethyst](https://github.com/dopebnan/kwancore/blob/amethyst/changelog.md) changelog.
 
+## [2.0] - 2022-09-24
+### Changed
+- Added compatibility for the new API changes
+
 ## [1.0.1] - 2022-07-04
 ### Added
 - Load average into cpu_task logs
