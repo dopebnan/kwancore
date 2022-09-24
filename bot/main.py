@@ -84,7 +84,7 @@ class KwanCore(commands.Bot):
         self.config = config
         self.logger = logger
         self.errors = errors
-        self.version = "1.0.2-beta"
+        self.version = "2.0"
         self.temp_warning = 0
 
     async def setup_hook(self):
