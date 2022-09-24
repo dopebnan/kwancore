@@ -161,7 +161,7 @@ class KwanCore(commands.Bot):
             self.reload()
 
     async def on_command_completion(self, ctx):
-        cmd = ctx.command.qualified_name
+        cmd = ctx.command.name
         logger.log("command", f"{str(ctx.guild) + '/#' + ctx.channel.name}",
                    ctx.message.content, f"<{ctx.message.author}, {ctx.message.author.id}>")
         if cmd == "settings":
