@@ -94,5 +94,5 @@ class BotInfo(commands.Cog, name="Bot Info", description="Stuff about the bot"):
         await ctx.send(embed=embed)
 
 
-def setup(bot):
-    bot.add_cog(BotInfo(bot))
+async def setup(bot):
+    await bot.add_cog(BotInfo(bot))

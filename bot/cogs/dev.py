@@ -143,5 +143,5 @@ class Dev(commands.Cog, name="Developer Commands", description="Commands that ar
             await ctx.send("Created a new log file")
 
 
-def setup(bot):
-    bot.add_cog(Dev(bot))
+async def setup(bot):
+    await bot.add_cog(Dev(bot))

@@ -78,7 +78,7 @@ if len(settings) != len(config["default_settings"]):
 status_msg = ["KWANCORE!!!", "kc!"]
 
 
-class KwanCore(commands.bot):
+class KwanCore(commands.Bot):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.config = config
