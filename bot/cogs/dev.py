@@ -91,6 +91,8 @@ class Dev(commands.Cog, name="Developer Commands", description="Commands that ar
                 pull = terminal(cmd)
                 status = terminal("cd ../ && git fetch && git status").split('\n', 3)[1]
                 await ctx.send(f"{pull}\n{status}")
+                self.bot.logger.log('INFO', "update", "Restarting...")
+                os.execv("./main.py", ("./main.py",))
             else:
                 await ctx.send("Aborted.")
 
