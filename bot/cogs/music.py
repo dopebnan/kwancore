@@ -22,6 +22,7 @@ ytdl_opts = {
     "cookiefile": "usercontent/cookies.txt"
 }
 ffmpeg_opts = '-vn'
+ffmpeg_bopts = "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5"
 
 
 class Music(commands.Cog, name="Music", description="Music commands"):
@@ -135,7 +136,7 @@ class Music(commands.Cog, name="Music", description="Music commands"):
             self.queue_index += 1
 
             self.logger.log('info', "play_music", f"Playing '{song['title']}'")
-            vc.play(discord.FFmpegPCMAudio(song["hls"], options=ffmpeg_opts),
+            vc.play(discord.FFmpegPCMAudio(song["hls"], options=ffmpeg_opts, before_options=ffmpeg_bopts),
                     after=lambda play: asyncio.run_coroutine_threadsafe(self.play_music(), self.bot.loop))
 
     @tasks.loop(minutes=5)
@@ -343,12 +344,12 @@ class Music(commands.Cog, name="Music", description="Music commands"):
 
         embed = discord.Embed(
             title=info.full_title,
-            description=info.lyrics[:2000].split("Lyrics")[1],
+            description=info.lyrics[:2000],
             color=discord.Color.random()
         )
         embed.add_field(
             name="\u200b",
-            value=info.lyrics[2000:3000].replace("Embed", '') + '…',
+            value=info.lyrics[2000:3000] + '…',
             inline=False
         )
         if len(info.lyrics) > 3000:
