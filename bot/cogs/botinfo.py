@@ -59,9 +59,6 @@ class BotInfo(commands.Cog, name="Bot Info", description="Stuff about the bot"):
 
     @commands.command(name="sysinfo", aliases=["chkdsk", "filecheck", "fsck"], brief="Gives technical info about bot")
     async def sysinfo(self, ctx):
-        pic_num = len(os.listdir("usercontent/images/pic/"))
-        uwu_num = len(os.listdir("usercontent/images/uwu/"))
-        pain_num = len(os.listdir("usercontent/images/pain/"))
         header = f"{self.bot.user.name}@[kwanCore]"
         latest_ver = terminal("git tag -l").split('\n')[-2]
         try:
@@ -78,9 +75,6 @@ class BotInfo(commands.Cog, name="Bot Info", description="Stuff about the bot"):
                   f"Discord.py: {discord.__version__}\n"
                   f"Current Version: {self.bot.version}\n"
                   f"Latest Version: {latest_ver}\n"
-                  f"r!pic Images: {pic_num}\n"
-                  f"r!uwu Images: {uwu_num}\n"
-                  f"r!pain Images: {pain_num}\n"
                   f"```")
         await ctx.send(result)
 
