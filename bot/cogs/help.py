@@ -49,12 +49,15 @@ class Help(commands.Cog, name="Help", description="Help commands"):
         if not arg:
             result = "```bash\n"
             for cog in self.bot.cogs:
-                result += f"{cog}\n# {self.bot.cogs[cog].description}\n"
-                self.logger.log("info", "help", f"Set-up the core of '{cog}' msg")
-                for cmd in self.bot.commands:
-                    if cmd.cog == self.bot.cogs[cog]:
-                        result += f"{cmd.name}{' ' * (14 - len(cmd.name))}- {cmd.brief}\n"
-                        self.logger.log("info", "help", f"Added '{cmd.qualified_name}' to the msg")
+                cog = self.bot.get_cog(cog)
+                result += f"{cog.qualified_name}\n# {cog.description}\n"
+                self.logger.log("info", "help",
+                                f"Set-up the core of '{cog.qualified_name}' msg")
+                coms = cog.get_commands()
+                for cmd in coms:
+                    result += f"{cmd.name}{' ' * (14 - len(cmd.name))}- {cmd.brief}\n"
+                    self.logger.log("info", "help",
+                                    f"Added '{cmd.qualified_name}' to the msg")
                 result += "\n\n"
 
             result += ("You can also search for a specific command by putting the command name at the end!\n"
