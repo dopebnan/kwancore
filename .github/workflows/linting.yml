@@ -24,7 +24,7 @@ jobs:
           pip install pylint
           pip install -r requirements.txt
       - name: Analyze code with flake8
-        run: flake8 --extend-ignore=E501 $(git ls-files '*.py')
+        run: flake8 --extend-ignore=E501,E203 $(git ls-files '*.py')
       - name: Analyze code with pylint
         run: pylint --fail-under=8 --max-line-length=120 --disable=C0114,C0115,C0116 $(git ls-files '*.py')
 

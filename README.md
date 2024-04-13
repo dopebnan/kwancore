@@ -3,7 +3,7 @@
 [![kwanCore](https://raw.githubusercontent.com/dopebnan/kwancore/main/assets/logo.png)](README.md "[kwanCore]")
 
 [![Latest Release](https://img.shields.io/github/v/release/dopebnan/kwancore?display_name=release&sort=semver)](https://github.com/dopebnan/kwancore/releases)
-[![GitHub Workflow](https://img.shields.io/github/workflow/status/dopebnan/kwancore/Linting)](https://github.com/dopebnan/kwancore/actions/workflows/linting.yml)
+[![GitHub Workflow](https://img.shields.io/github/actions/workflow/status/dopebnan/kwancore/linting.yml)](https://github.com/dopebnan/kwancore/actions/workflows/linting.yml)
 [![discord.py](https://img.shields.io/badge/-discord.py-5865F2)](https://github.com/Rapptz/discord.py)
 [![License: GPLv3](https://img.shields.io/github/license/dopebnan/kwancore)](LICENSE)
 [![Commit Activity](https://img.shields.io/github/commit-activity/m/dopebnan/kwancore)](https://github.com/dopebnan/kwancore/commits)
