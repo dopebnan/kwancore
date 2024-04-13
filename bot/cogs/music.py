@@ -76,7 +76,8 @@ class Music(commands.Cog, name="Music", description="Music commands"):
                 info = yt_l.extract_info(f"{arg}{video}", download=False)
                 if len(info["entries"]) < 1:
                     raise ValueError("Search result returned nothing")
-                self.logger.log("info", "search", f"Found '{info['title']}' ({info['entries'][0]['display_id']})")
+                self.logger.log("info", "search",
+                                f"Found '{info['title']}' ({info['entries'][0]['display_id']})")
         result = info
         if len(result["entries"]) > 50:
             raise ValueError("You shouldn't queue more than 50 videos at the same time.")
@@ -145,8 +146,11 @@ class Music(commands.Cog, name="Music", description="Music commands"):
             self.music_queue.clear()
             self.queue_index = 0
             await ctx.voice_client.disconnect()
-            embed = discord.Embed(title="Inactivity", description="Bot has been inactive for too long, leaving vc",
-                                  color=discord.Color.red())
+            embed = discord.Embed(
+                title="Inactivity",
+                description="Bot has been inactive for too long, leaving vc",
+                color=discord.Color.red()
+            )
             await ctx.send(embed=embed)
             self.logger.log("warn", "inactivity", "Too much inactivity, left vc")
             self.checks = 0

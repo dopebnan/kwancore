@@ -6,7 +6,6 @@ You should have received a copy of the GNU General Public License
 along with kwanCore. If not, see <https://www.gnu.org/licenses/>.
 """
 
-import os
 from platform import platform, python_version
 
 import discord
@@ -57,7 +56,8 @@ class BotInfo(commands.Cog, name="Bot Info", description="Stuff about the bot"):
         )
         await ctx.send(embed=embed)
 
-    @commands.command(name="sysinfo", aliases=["chkdsk", "filecheck", "fsck"], brief="Gives technical info about bot")
+    @commands.command(name="sysinfo", aliases=["chkdsk", "filecheck", "fsck"],
+                      brief="Gives technical info about bot")
     async def sysinfo(self, ctx):
         header = f"{self.bot.user.name}@[kwanCore]"
         latest_ver = terminal("git tag -l").split('\n')[-2]
@@ -78,7 +78,8 @@ class BotInfo(commands.Cog, name="Bot Info", description="Stuff about the bot"):
                   f"```")
         await ctx.send(result)
 
-    @commands.command(name="sourcecode", aliases=["gh", "source", "github"], brief="Checkout the inner workings of bot")
+    @commands.command(name="sourcecode", aliases=["gh", "source", "github"],
+                      brief="Checkout the inner workings of bot")
     async def sourcecode(self, ctx):
         embed = discord.Embed(
             title="Source code",

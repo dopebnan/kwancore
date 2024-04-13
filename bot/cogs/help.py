@@ -57,7 +57,8 @@ class Help(commands.Cog, name="Help", description="Help commands"):
                         self.logger.log("info", "help", f"Added '{cmd.qualified_name}' to the msg")
                 result += "\n\n"
 
-            result += "You can also search for a specific command by putting the command name at the end!\n```"
+            result += ("You can also search for a specific command by putting the command name at the end!\n"
+                       "```")
             await ctx.send(result)
             self.logger.log("info", "help", "sent msg")
         else:

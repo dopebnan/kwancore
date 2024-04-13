@@ -69,7 +69,8 @@ except FileNotFoundError:
     logger.log("warn", "initialization", "Couldn't find settings file, creating a default one..")
     settings = default_settings()
 except json.decoder.JSONDecodeError:
-    logger.log("warn", "initialization", "Couldn't decode the file, are you sure it's not empty? Defaulting..")
+    logger.log("warn", "initialization", "Couldn't decode the file, are you sure it's not empty? "
+                                         "Defaulting..")
     settings = default_settings()
 if len(settings) != len(config["default_settings"]):
     logger.log("error", "initialization", "Bad settings file, defaulting..")
@@ -149,7 +150,11 @@ class KwanCore(commands.Bot):
 
         elif self.temp_warning > 5:
             self.temp_warning = 0
-            embed = discord.Embed(title="STOPPING", description=f"the pi's temp is `{temp}'C`", color=0xcc3300)
+            embed = discord.Embed(
+                title="STOPPING",
+                description=f"the pi's temp is `{temp}'C`",
+                color=0xcc3300
+            )
             embed.set_footer(text="last warning")
             logger.log("CRITICAL", "temp_task", f"The cpu reached {temp}'C, reloading")
 
@@ -195,7 +200,11 @@ class KwanCore(commands.Bot):
             err_id = shortcuts.save_traceback(error)
             try:
                 error_embed_parts = error_message.split(':', 1)
-                embed = discord.Embed(title=error_embed_parts[0], description=error_embed_parts[1], color=0xE3170A)
+                embed = discord.Embed(
+                    title=error_embed_parts[0],
+                    description=error_embed_parts[1],
+                    color=0xE3170A
+                )
             except IndexError:
                 embed = discord.Embed(title="Error:", description=error_message, color=0xE3170A)
             embed.set_footer(text=f"Error ID: {err_id}")

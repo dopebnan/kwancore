@@ -45,7 +45,8 @@ class Memes(commands.Cog, name="Memes", description="Reddit and stuff"):
             i += 1
             submission = await subreddit.random()
 
-        self.logger.log("info", "get_post_embed", f"Found {submission.permalink} from r/{submission.subreddit}")
+        self.logger.log("info", "get_post_embed",
+                        f"Found {submission.permalink} from r/{submission.subreddit}")
         embed = discord.Embed(
             title=submission.title,
             url=submission.url,

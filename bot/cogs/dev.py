@@ -28,7 +28,8 @@ def is_bool(arg):
     raise TypeError("Value isn't a boolean")
 
 
-class Dev(commands.Cog, name="Developer Commands", description="Commands that are for the bot devs and admins"):
+class Dev(commands.Cog, name="Developer Commands",
+          description="Commands that are for the bot devs and admins"):
     def __init__(self, bot):
         self.bot = bot
         self.logger = bot.logger
