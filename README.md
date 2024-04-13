@@ -9,8 +9,7 @@
 [![Commit Activity](https://img.shields.io/github/commit-activity/m/dopebnan/kwancore)](https://github.com/dopebnan/kwancore/commits)
 ![Last Commit](https://img.shields.io/github/last-commit/dopebnan/kwancore)
 
-kwanCore is a discord.py bot foundation. Everything is set up for you, you just need to tweak some settings
-for your liking.
+The quick discord.py bot base!
 </div>
 
 

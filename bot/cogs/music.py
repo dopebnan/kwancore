@@ -15,7 +15,12 @@ from discord.ext import commands, tasks
 from yt_dlp import YoutubeDL as yt_dlp
 from shortcuts import misc
 
-ytdl_opts = {'format': 'bestaudio/audio', "quiet": True, "ignoreerrors": True}
+ytdl_opts = {
+    'format': 'bestaudio/audio',
+    "quiet": True,
+    "ignoreerrors": True,
+    "cookiefile": "usercontent/cookies.txt"
+}
 ffmpeg_opts = '-vn'
 
 
