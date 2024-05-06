@@ -110,7 +110,11 @@ class Dev(commands.Cog, name="Developer Commands",
         elif len(args) > 1:
             if args[0] not in self.setting:
                 raise KeyError("That setting doesn't exist.")
-            self.setting[args[0]] = int(args[1]) if not args[0].endswith("bool") else is_bool(args[1])
+            try:
+                self.setting[args[0]] = int(args[1]) if not args[0].endswith(
+                    "bool") else is_bool(args[1])
+            except ValueError:
+                self.setting[args[0]] = args[1]
             with open("usercontent/settings.json", 'w') as f:
                 json.dump(self.setting, f)
             self.logger.log("info", "settings/change", f"Changed {args[0]} to {args[1]}.")
