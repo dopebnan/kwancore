@@ -10,30 +10,30 @@ import discord
 from discord.ext import commands
 
 descriptions = {
-    "play": ("`kc!play [flag] [*song]`\n\nSearches for your requested song and play the best result\n"
+    "play": ("`$PREFplay [flag] [*song]`\n\nSearches for your requested song and play the best result\n"
              "\nSearch flags:"
              f"\n` -yt, --youtube{' ' * 7}search on youtube`"
              f"\n` -sc, --soundcloud{' ' * 4}search on soundcloud`"),
-    "playfile": "`kc!playfile`\n\nPlays the file attached to your message",
-    "remove": "`kc!remove [index]`\n\nRemoves the `index`th item from the queue",
-    "settings": ("`kc!settings [key] [value]`\n"
-                 "`kc!settings [mode]`\n"
-                 "`kc!settings`\n"
+    "playfile": "`$PREFplayfile`\n\nPlays the file attached to your message",
+    "remove": "`$PREFremove [index]`\n\nRemoves the `index`th item from the queue",
+    "settings": ("`$PREFsettings [key] [value]`\n"
+                 "`$PREFsettings [mode]`\n"
+                 "`$PREFsettings`\n"
                  "\nChange the value of each `key` to `value`"
-                 "\neg. `kc!settings pic_cooldown 10`\n"
+                 "\neg. `$PREFsettings pic_cooldown 10`\n"
                  "\nModes:\n"
-                 "`kc!settings reset    resets every settings to the default value`\n"
-                 "`kc!settings          displays the settings`"),
-    "update": ("`kc!update [flag]`\n"
+                 "`$PREFsettings reset    resets every settings to the default value`\n"
+                 "`$PREFsettings          displays the settings`"),
+    "update": ("`$PREFupdate [flag]`\n"
                "\nUse the `--help` flag for help"),
-    "log": ("`kc!log [flag]`\n"
+    "log": ("`$PREFlog [flag]`\n"
             "\nIf no flags are present, DMs you the log\n"
             "\nFlags:\n"
             "` -n, --create-new    creates a new log.txt, and saves the old one`"),
-    "random_image": ("`kc!random_image [subreddit]`\n"
+    "random_image": ("`$PREFrandom_image [subreddit]`\n"
                      "\nGets a random image from r/`subreddit`"),
-    "help": ("`r!help [command]\n"
-             "`r!help`\n"
+    "help": ("`$PREFhelp [command]\n"
+             "`$PREFhelp`\n"
              "\nDisplays help about a command. If no command is specified then it lists all the commands.")
 }
 
@@ -43,6 +43,7 @@ class Help(commands.Cog, name="Help", description="Help commands"):
         Help.color = 0x5de7b4
         self.bot = bot
         self.logger = bot.logger
+        self.pref = bot.command_prefix
 
     @commands.command(name="help", brief="Sends the help message")
     async def help(self, ctx, arg=None):
@@ -70,8 +71,8 @@ class Help(commands.Cog, name="Help", description="Help commands"):
 
             cmds = self.bot.all_commands
             if arg in descriptions:
-                title = descriptions[arg].split("\n\n", 1)[0]
-                desc = descriptions[arg].split("\n\n", 1)[1]
+                title = descriptions[arg].split("\n\n", 1)[0].replace("$PREF", self.pref)
+                desc = descriptions[arg].split("\n\n", 1)[1].replace("$PREF", self.pref)
             else:
                 title = f"`{self.bot.command_prefix}{arg}`"
                 desc = cmds[arg].brief
