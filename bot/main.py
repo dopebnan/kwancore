@@ -217,7 +217,7 @@ class KwanCore(commands.Bot):
 
 
 async def main():
-    async with KwanCore(command_prefix="kc!", intents=discord.Intents.all()) as bot:
+    async with KwanCore(command_prefix=settings["prefix"], intents=discord.Intents.all()) as bot:
         await bot.start(bot.config["token"])
 
 

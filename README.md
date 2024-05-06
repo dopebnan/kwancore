@@ -42,6 +42,7 @@ default_settings:  # Default settings
   pic_cooldown:  # cooldown between pic commands IN SECONDS
   pic_cooldown_bool:  # If it should display a cooldown message for pic commands
   echo_cooldown:  # cooldown between echo commands IN SECONDS
+  prefix:  # the bot prefix you want
 ```
 
 Then you just need to start the bot by running `bot/main.py` in a terminal.
