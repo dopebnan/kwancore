@@ -73,6 +73,7 @@ class BotInfo(commands.Cog, name="Bot Info", description="Stuff about the bot"):
                   f"Uptime: {terminal(b'uptime -p').replace('up ', '')}"
                   f"Python: {python_version()}\n"
                   f"Discord.py: {discord.__version__}\n"
+                  f"kwanCore: {self.bot.kwanCore_ver}\n"
                   f"Current Version: {self.bot.version}\n"
                   f"Latest Version: {latest_ver}\n"
                   f"```")

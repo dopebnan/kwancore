@@ -87,6 +87,7 @@ class KwanCore(commands.Bot):
         self.errors = errors
         self.version = "2.1-alpha"
         self.temp_warning = 0
+        self.kwanCore_ver = "2.1-alpha"
 
     async def setup_hook(self):
         self.status_task.start()
