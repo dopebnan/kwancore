@@ -6,6 +6,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 Check the [Amethyst](https://github.com/dopebnan/kwancore/blob/amethyst/changelog.md) changelog.
 
+## [2.1]
+### Changed
+- Added kwanCore version into `sysinfo`
+
+### Fixed
+- `sysinfo` doesn't contain irrelevant pic info
+- Code quality has been improving via linting
+- `cogs.music` now accepts cookies to bypass age-restricted content
+- Fixed `help`'s efficiency 
+- Fixed `cogs.music` randomly disconnecting and stopping
+- Made prefixed non-hardcoded
+- Fixed `settings` not taking non-integer values
+
 ## [2.0] - 2022-09-24
 ### Changed
 - Added compatibility for the new API changes
