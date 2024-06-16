@@ -1,15 +1,15 @@
 <div align="center">
 
-[![kwanCore](https://raw.githubusercontent.com/dopebnan/kwancore/main/assets/logo.png)](README.md "[kwanCore]")
+![kwanCore Amethyst](https://raw.githubusercontent.com/dopebnan/kwancore/amethyst/assets/amethyst.png)
 
-[![Latest Release](https://img.shields.io/github/v/release/dopebnan/kwancore?display_name=release&sort=semver)](https://github.com/dopebnan/kwancore/releases)
-[![GitHub Workflow](https://img.shields.io/github/actions/workflow/status/dopebnan/kwancore/linting.yml)](https://github.com/dopebnan/kwancore/actions/workflows/linting.yml)
+[![Latest Release](https://img.shields.io/github/v/release/dopebnan/kwancore?display_name=release&include_prereleases&sort=semver)](https://github.com/dopebnan/kwancore/releases)
 [![discord.py](https://img.shields.io/badge/-discord.py-5865F2)](https://github.com/Rapptz/discord.py)
 [![License: GPLv3](https://img.shields.io/github/license/dopebnan/kwancore)](LICENSE)
-[![Commit Activity](https://img.shields.io/github/commit-activity/m/dopebnan/kwancore)](https://github.com/dopebnan/kwancore/commits)
-![Last Commit](https://img.shields.io/github/last-commit/dopebnan/kwancore)
+[![Commit Activity](https://img.shields.io/github/commit-activity/m/dopebnan/kwancore/amethyst)](https://github.com/dopebnan/kwancore/commits/amethyst)
+![Last Commit](https://img.shields.io/github/last-commit/dopebnan/kwancore/amethyst)
 
-The quick discord.py bot base!
+kwanCore Amethyst is the beta build of kwanCore. Updates here may be unstable.
+For stable builds, check the [main branch](https://github.com/dopebnan/kwancore/tree/main).
 </div>
 
 

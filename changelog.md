@@ -7,8 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Check the [Amethyst](https://github.com/dopebnan/kwancore/blob/amethyst/changelog.md) changelog.
 
 ## [2.1]
+### Added
+- Added `cogs.money`, which is an economy cog
+- Added `money_start` which adds user into the money database
+- Added `profile` which displays a user's profile and stats
+- Added `inventory` which displays a user's inventory
+- Added `item` which displays info about an item
+- Added `errors.MoneyError`, which is a base error for the economy cog
+- Added `ProfileAlreadyExists`, which gets raised when a profile exists when it shouldn't
+- Added `ProfileNotFound`, which gets raised when a profile doesn't exists when it should
+- Added `ItemNotFound`, which gets raised when an item doesn't exist when it should
+
 ### Changed
 - Added kwanCore version into `sysinfo`
+- Added documentation into `shortcuts`
+- Fixed command briefs
 
 ### Fixed
 - `sysinfo` doesn't contain irrelevant pic info
