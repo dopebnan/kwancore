@@ -101,6 +101,8 @@ class Money(commands.Cog, name="Money", description="Money and stuff"):
 
         inv = prof['inventory']
         for item, count in inv.items():
+            if count == 0:
+                break
             item = db.items.find_one({"_id": int(item)})
             embed.add_field(
                 name=f"{item['emoji']} {item['name']} - {count}",
@@ -108,7 +110,7 @@ class Money(commands.Cog, name="Money", description="Money and stuff"):
                       f"*ID `{item['_id']}`* - {item['type']}",
                 inline=False
             )
-            await ctx.send(embed=embed)
+        await ctx.send(embed=embed)
 
     @commands.command(name="item", brief="Searches for an item's stats")
     async def item(self, ctx, name):
@@ -131,6 +133,14 @@ class Money(commands.Cog, name="Money", description="Money and stuff"):
         embed.add_field(name="Part of", value=f"`{item['bundle']}` bundle", inline=False)
 
         await ctx.send(embed=embed)
+
+    @commands.command(name="add_items", brief="Add new items from file")
+    async def add_items(self, ctx):
+        with open("usercontent/items.json") as f:
+            items = json.load(f)
+        for item in items:
+            if not db.items.find_one({"_id": item["_id"]}):
+                db.items.insert_one(item)
 
 
 async def setup(bot):

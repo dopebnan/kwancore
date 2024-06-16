@@ -1,0 +1,14 @@
+[
+  {
+    "_id": 0,
+    "emoji": ":black_large_square",
+    "name": "nothing",
+    "brief": "It's nothing",
+    "description": "It's nothing",
+    "price": 0,
+    "trade_value": 0,
+    "type": "None",
+    "rarity": "Common",
+    "bundle": "starters"
+  }
+]
