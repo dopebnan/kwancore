@@ -104,7 +104,7 @@ class Music(commands.Cog, name="Music", description="Music commands"):
             if "audio" not in file.content_type:
                 raise self.bot.errors.BadAttachment("Attachment isn't an audio file")
             # check length via ffprobe
-            a = misc.terminal(f"ffprobe {file} -show_entries format=duration -v quiet -of csv=\"p=0\"")
+            a = misc.terminal(f"ffprobe \"{file}\" -show_entries format=duration -v quiet -of csv=\"p=0\"")
             self.logger.log("info", "attachment_url", f"Got {str(file)}")
             result = {
                 "hls": str(file),
