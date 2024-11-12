@@ -5,8 +5,8 @@ import time
 import discord
 from discord.ext import commands, tasks
 
-# TODO: start mongodb in the usercontent/db dir via mongod --dbpath ./
-# TODO: mongosh: db.<collection name>.find()
+# start mongodb in the usercontent/db dir via mongod --dbpath ./
+# mongosh: db.<collection name>.find()
 
 dbcli = MongoClient()
 db = dbcli.money
@@ -32,10 +32,10 @@ class Money(commands.Cog, name="Money", description="Money and stuff"):
 
     @tasks.loop(hours=1)
     async def money_check(self):
-        # TODO: iterate through every user and check if they have any active effects
-        # TODO: if not, then clear it
-        # TODO: the effect's use will be checked at i.e., death, and then we don't need to worry about
-        # TODO: weird time loopings to remove it at the right time, cuz it won't work where it doesn't need to
+        # iterate through every user and check if they have any active effects
+        # if not, then clear it
+        # the effect's use will be checked at i.e., death, and then we don't need to worry about
+        # weird time loopings to remove it at the right time, cuz it won't work where it doesn't need to
 
         self.logger.log("info", "money_check", f"finished the checks")
 
@@ -63,6 +63,7 @@ class Money(commands.Cog, name="Money", description="Money and stuff"):
         print(prof["inventory"])
 
         await ctx.send("You have entered the Money experience! Have fun!")
+        self.logger.log("info", "money_start", f"{ctx.author.name} has joined the money experience!")
 
     @commands.command(name="profile", brief="View your profile")
     async def profile(self, ctx):
@@ -95,7 +96,6 @@ class Money(commands.Cog, name="Money", description="Money and stuff"):
         embed.add_field(name="Inventory",
                         value=f"`{item_count}` items")
         embed.add_field(name="Deaths", value=f"`{data['deaths']}`")
-        # TODO: clean up the active effects thinga
         embed.add_field(name="Active Effects", value=effect_parse(data["effects"]))
         await ctx.send(embed=embed)
 
@@ -189,7 +189,6 @@ class Money(commands.Cog, name="Money", description="Money and stuff"):
             }
         )
 
-        # TODO: logging duh
         await ctx.send("Used item")
 
 
