@@ -72,4 +72,6 @@ class ProfileNotFound(MoneyError):
 
 
 class ItemNotFound(MoneyError):
-    pass
+    def __init__(self, item, msg=None):
+        msg = msg or f"{item} doesn't exist in your inventory or in the database"
+        super().__init__(msg)
