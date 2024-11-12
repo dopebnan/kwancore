@@ -1,8 +1,8 @@
 [
   {
     "_id": 0,
-    "emoji": ":black_large_square",
-    "name": "nothing",
+    "emoji": ":black_large_square:",
+    "name": "Nothing",
     "brief": "It's nothing",
     "description": "It's nothing",
     "price": 0,
@@ -10,5 +10,29 @@
     "type": "None",
     "rarity": "Common",
     "bundle": "starters"
+  },
+  {
+    "_id": 1,
+    "emoji": ":green_apple:",
+    "name": "Apple",
+    "brief": "It's nothing",
+    "description": "It's nothing",
+    "price": 0,
+    "trade_value": 0,
+    "type": "None",
+    "rarity": "Common",
+    "bundle": "starters",
+    "effects": [
+      {
+        "_id": 0,
+        "name": "Lifesaver",
+        "brief": "You won't lose items",
+        "description": "Your items don't disappear when you die!",
+        "type": "Positive",
+        "length": 26,
+        "start": 0,
+        "end": 0
+      }
+    ]
   }
 ]
